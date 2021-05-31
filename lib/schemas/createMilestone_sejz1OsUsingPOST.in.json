@@ -1,0 +1,43 @@
+{
+    "type": "object",
+    "properties": {
+        "projectId": {
+            "required": true,
+            "type": "string"
+        },
+        "scenarioId": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "type": "object",
+            "required": [
+                "date",
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Completion Initiation Phase"
+                },
+                "date": {
+                    "type": "string",
+                    "example": "2019-01-31",
+                    "description": "format: YYYY-MM-DD"
+                },
+                "projectPhase": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "example": "Initiation",
+                            "description": "The project phase must exist prior to creation. It will not be implicitly created."
+                        }
+                    },
+                    "title": "ProjectPhaseRequest"
+                }
+            },
+            "title": "MilestoneCreateRequest"
+        }
+    }
+}

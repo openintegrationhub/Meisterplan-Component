@@ -1,0 +1,61 @@
+{
+    "type": "object",
+    "properties": {
+        "roleId": {
+            "required": true,
+            "type": "string"
+        },
+        "scenarioId": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "type": "object",
+            "properties": {
+                "segments": {
+                    "type": "array",
+                    "example": [
+                        {
+                            "start": "2019-01-31",
+                            "finish": "2019-12-31",
+                            "fte": 0.5
+                        }
+                    ],
+                    "description": "Role capacity segments to update for this role.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "start": {
+                                "type": "string",
+                                "format": "date",
+                                "example": "2019-01-31"
+                            },
+                            "finish": {
+                                "type": "string",
+                                "format": "date",
+                                "example": "2019-12-31"
+                            },
+                            "fte": {
+                                "type": "number",
+                                "format": "double",
+                                "description": "The request accepts either FTE, hours or days."
+                            },
+                            "days": {
+                                "type": "number",
+                                "format": "double",
+                                "description": "The request accepts either FTE, hours or days."
+                            },
+                            "hours": {
+                                "type": "number",
+                                "format": "double",
+                                "description": "The request accepts either FTE, hours or days."
+                            }
+                        },
+                        "title": "CapacityPayload"
+                    }
+                }
+            },
+            "title": "RoleCapacityUpdateRequest"
+        }
+    }
+}

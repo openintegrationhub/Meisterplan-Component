@@ -1,0 +1,27 @@
+{
+    "type": "object",
+    "properties": {
+        "filter": {
+            "required": false,
+            "type": "string"
+        },
+        "pageAfter": {
+            "required": false,
+            "type": "string"
+        },
+        "pageSize": {
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 500,
+            "exclusiveMinimum": false,
+            "exclusiveMaximum": false,
+            "default": 100
+        },
+        "scenarioId": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

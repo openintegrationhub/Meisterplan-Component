@@ -1,0 +1,9 @@
+{
+    "type": "object",
+    "properties": {
+        "scenarioId": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

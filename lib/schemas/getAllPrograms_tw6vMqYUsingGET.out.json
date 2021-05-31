@@ -1,0 +1,13 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+        },
+        "name": {
+            "type": "string",
+            "example": "Release road map"
+        }
+    }
+}

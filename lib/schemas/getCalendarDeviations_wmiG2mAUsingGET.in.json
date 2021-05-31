@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "properties": {
+        "finish": {
+            "required": false,
+            "type": "string",
+            "format": "date"
+        },
+        "resourceId": {
+            "required": true,
+            "type": "string"
+        },
+        "start": {
+            "required": false,
+            "type": "string",
+            "format": "date"
+        }
+    }
+}

@@ -1,0 +1,126 @@
+{
+    "type": "object",
+    "properties": {
+        "scenarioId": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "type": "object",
+            "properties": {
+                "aboveMustHave": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "example": [
+                                {
+                                    "id": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                }
+                            ],
+                            "items": {
+                                "type": "object",
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
+                                        "description": "The id value can be a project or a program."
+                                    }
+                                },
+                                "title": "PriorityEntryRequest"
+                            }
+                        },
+                        "position": {
+                            "type": "string",
+                            "example": "LAST",
+                            "description": "Position can be <tt>FIRST</tt> or <tt>LAST</tt>. <tt>FIRST</tt> is default",
+                            "enum": [
+                                "FIRST",
+                                "LAST"
+                            ]
+                        }
+                    },
+                    "title": "PriorityListRequest"
+                },
+                "regular": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "example": [
+                                {
+                                    "id": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                }
+                            ],
+                            "items": {
+                                "type": "object",
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
+                                        "description": "The id value can be a project or a program."
+                                    }
+                                },
+                                "title": "PriorityEntryRequest"
+                            }
+                        },
+                        "position": {
+                            "type": "string",
+                            "example": "LAST",
+                            "description": "Position can be <tt>FIRST</tt> or <tt>LAST</tt>. <tt>FIRST</tt> is default",
+                            "enum": [
+                                "FIRST",
+                                "LAST"
+                            ]
+                        }
+                    },
+                    "title": "PriorityListRequest"
+                },
+                "belowCutOff": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "example": [
+                                {
+                                    "id": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                }
+                            ],
+                            "items": {
+                                "type": "object",
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
+                                        "description": "The id value can be a project or a program."
+                                    }
+                                },
+                                "title": "PriorityEntryRequest"
+                            }
+                        },
+                        "position": {
+                            "type": "string",
+                            "example": "LAST",
+                            "description": "Position can be <tt>FIRST</tt> or <tt>LAST</tt>. <tt>FIRST</tt> is default",
+                            "enum": [
+                                "FIRST",
+                                "LAST"
+                            ]
+                        }
+                    },
+                    "title": "PriorityListRequest"
+                }
+            },
+            "title": "PrioritiesUpdateRequest"
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "properties": {
+        "scenarioId": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Release road map"
+                }
+            },
+            "title": "ProgramCreateRequest"
+        }
+    }
+}

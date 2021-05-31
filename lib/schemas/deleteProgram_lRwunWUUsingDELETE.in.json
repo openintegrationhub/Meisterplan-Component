@@ -1,0 +1,13 @@
+{
+    "type": "object",
+    "properties": {
+        "programId": {
+            "required": true,
+            "type": "string"
+        },
+        "scenarioId": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "type": "object",
+    "properties": {
+        "financialsId": {
+            "required": true,
+            "type": "string"
+        },
+        "projectId": {
+            "required": true,
+            "type": "string"
+        },
+        "scenarioId": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "type": "object",
+    "properties": {
+        "roleId": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

@@ -1,0 +1,63 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da_0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
+            "description": "This allocation's ID"
+        },
+        "allocatedEntity": {
+            "description": "Description of the entity to which this allocation is linked",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
+                    "description": "The id of the entity to which this allocation is linked"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The entity type for this allocation",
+                    "enum": [
+                        "ROLE",
+                        "RESOURCE"
+                    ]
+                },
+                "projectRole": {
+                    "type": "string",
+                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
+                    "description": "Will only be set if type equals RESOURCE"
+                }
+            },
+            "title": "AllocatedEntityResponse"
+        },
+        "segments": {
+            "type": "array",
+            "description": "The allocation's time segments",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "start": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2019-01-31",
+                        "description": "Start date of this allocation"
+                    },
+                    "finish": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2019-12-31",
+                        "description": "End date of this allocation"
+                    },
+                    "hours": {
+                        "type": "number",
+                        "format": "double",
+                        "example": 104.5,
+                        "description": "Allocation value in hours"
+                    }
+                },
+                "title": "AllocationSegmentResponse"
+            }
+        }
+    }
+}

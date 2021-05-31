@@ -1,0 +1,52 @@
+{
+    "type": "object",
+    "properties": {
+        "resourceId": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "type": "object",
+            "properties": {
+                "finish": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2019-12-31"
+                },
+                "start": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2019-01-31"
+                },
+                "deviations": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "relativeCapacity"
+                        ],
+                        "properties": {
+                            "finish": {
+                                "type": "string",
+                                "format": "date",
+                                "example": "2019-12-31"
+                            },
+                            "relativeCapacity": {
+                                "type": "number",
+                                "format": "double",
+                                "example": 0.5
+                            },
+                            "start": {
+                                "type": "string",
+                                "format": "date",
+                                "example": "2019-01-31"
+                            }
+                        },
+                        "title": "CalendarDeviationRequest"
+                    }
+                }
+            },
+            "title": "CalendarDeviationUpdateRequest"
+        }
+    }
+}
