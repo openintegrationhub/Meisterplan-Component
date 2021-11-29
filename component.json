@@ -331,7 +331,7 @@
         "getScenarioById_tw6vMqYUsingGET": {
             "main": "./lib/actions/getScenarioById_tw6vMqYUsingGET.js",
             "title": "Get Scenarios by ID",
-            "description": "Returns the individual scenario specified by the given ID.",
+            "description": "Returns the individual scenario specified by the given ID. <br> <b>Hint</b>:\nYou can use \"planOfRecord\" as the ID for the plan of record scenario.",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
@@ -661,7 +661,7 @@
         "updateRoleCapacities__wj8JRcUsingPOST": {
             "main": "./lib/actions/updateRoleCapacities__wj8JRcUsingPOST.js",
             "title": "Update the capacity segments of a role",
-            "description": "Updates the capacity segments for the role specified by the given ID.",
+            "description": "Updates the capacity segments for the role specified by the given ID. To erase all capacity segments, send a segment without start or finish and 0 capacity",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
