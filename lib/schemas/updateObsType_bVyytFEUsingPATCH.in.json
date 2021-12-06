@@ -1,0 +1,22 @@
+{
+    "type": "object",
+    "properties": {
+        "obsTypeId": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Department"
+                }
+            },
+            "title": "ObsTypeUpdateRequest"
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "properties": {
+        "calendarId": {
+            "required": true,
+            "type": "string"
+        },
+        "endDate": {
+            "required": true,
+            "type": "string",
+            "format": "date"
+        },
+        "startDate": {
+            "required": true,
+            "type": "string",
+            "format": "date"
+        }
+    }
+}

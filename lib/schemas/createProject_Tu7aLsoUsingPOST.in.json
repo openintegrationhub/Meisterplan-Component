@@ -1,0 +1,184 @@
+{
+    "type": "object",
+    "properties": {
+        "scenarioId": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "projectKey": {
+                    "type": "string",
+                    "example": "ID-15",
+                    "description": "Must be unique. If empty, value will be generated."
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Meisterplan API v1.1"
+                },
+                "start": {
+                    "type": "string",
+                    "example": "2019-01-31",
+                    "description": "format: YYYY-MM-DD"
+                },
+                "finish": {
+                    "type": "string",
+                    "example": "2019-01-31",
+                    "description": "format: YYYY-MM-DD"
+                },
+                "externalId": {
+                    "type": "string",
+                    "example": "myCustomID",
+                    "description": "Must be unique. If empty, value will be generated."
+                },
+                "costType": {
+                    "type": "string",
+                    "example": "CAPEX",
+                    "description": "default: see Meisterplan documentation.",
+                    "enum": [
+                        "CAPEX",
+                        "OPEX"
+                    ]
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "manager": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                        }
+                    },
+                    "title": "ProjectManagerRequest"
+                },
+                "status": {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "example": "Approved",
+                            "description": "<h4>Missing values will be created automatically</h4>\n    <p>If you import an unknown value, it will be automatically created for you in Meisterplan.</p>"
+                        }
+                    },
+                    "title": "StatusFieldRequest"
+                },
+                "businessGoal": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "example": "Change the Business",
+                            "description": "<h4>Missing values will be created automatically</h4>\n    <p>If you import an unknown value, it will be automatically created for you in Meisterplan.</p>"
+                        }
+                    },
+                    "title": "BusinessGoalRequest"
+                },
+                "approvedTotalEffort": {
+                    "type": "object",
+                    "properties": {
+                        "hours": {
+                            "type": "string",
+                            "example": 25.4,
+                            "description": "The request accepts either hours or days."
+                        },
+                        "days": {
+                            "type": "string",
+                            "example": 80.5,
+                            "description": "The request accepts either hours or days."
+                        }
+                    },
+                    "title": "ApprovedTotalEffortRequest"
+                },
+                "customFields": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                            "value": {
+                                "type": "object"
+                            }
+                        },
+                        "title": "CustomFieldValueType",
+                        "description": "<h4>Missing lookup values created automatically</h4>\n    <p>If you create or update a project with a custom lookup field, unknown lookup values will be automatically created.</p>"
+                    }
+                },
+                "obsUnits": {
+                    "type": "object",
+                    "example": {
+                        "Department": {
+                            "path": "Services/Consulting/IT"
+                        }
+                    },
+                    "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
+                                "description": "If you specify the id to reference an OBS unit you must omit the path property."
+                            },
+                            "path": {
+                                "type": "string",
+                                "description": "<h4>Missing OBS paths will be created implicitly</h4>\n    <p>If you send an OBS path, all necessary path segments will be created for you in Meisterplan automatically.</p>\n<h4>Paths</h4><p>Paths delimited by <tt>/</tt> (e.g. in calendars and OBS unit paths)\n    may define path segments which contain <tt>/</tt> by escaping with <tt>//</tt>. E.g. the path\n    <tT>Europe/Berlin//Amsterdam</tt> will be interpreted as <tt>['Europe', 'Berlin/Amsterdam']</tt>.\n    An uneven amount of slashes will be interpreted as the following segment starting with one or more slashes.</p>"
+                            }
+                        },
+                        "title": "ObsUnitReferenceRequest"
+                    }
+                },
+                "program": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                        }
+                    },
+                    "title": "ProgramRequest"
+                },
+                "priority": {
+                    "type": "object",
+                    "required": [
+                        "rankCategory"
+                    ],
+                    "properties": {
+                        "rankCategory": {
+                            "type": "object",
+                            "required": [
+                                "category",
+                                "position"
+                            ],
+                            "properties": {
+                                "category": {
+                                    "type": "string",
+                                    "example": "ABOVE_MUST_HAVE",
+                                    "enum": [
+                                        "ABOVE_MUST_HAVE",
+                                        "REGULAR",
+                                        "BELOW_CUT_OFF"
+                                    ]
+                                },
+                                "position": {
+                                    "type": "string",
+                                    "example": "LAST",
+                                    "enum": [
+                                        "LAST",
+                                        "FIRST"
+                                    ]
+                                }
+                            },
+                            "title": "PriorityRequestRankCategory"
+                        }
+                    },
+                    "title": "PriorityRequest"
+                }
+            },
+            "title": "ProjectCreateRequest"
+        }
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "type": "object",
+    "properties": {
+        "bookedEntity": {
+            "description": "Entity to which this actual time worked entry is linked",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
+                    "description": "The id of the entity to which this actual time worked entry is linked"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The entity type for this actual time worked entry",
+                    "enum": [
+                        "ROLE",
+                        "RESOURCE"
+                    ]
+                }
+            },
+            "title": "ActualsEntityLinkResponse"
+        },
+        "bookings": {
+            "type": "array",
+            "description": "Booking date and hours of this actual time worked entry",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "bookingDate": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2019-01-31",
+                        "description": "Booking date of this actual time worked entry"
+                    },
+                    "hours": {
+                        "type": "number",
+                        "format": "double",
+                        "example": 5.5,
+                        "description": "Actual time worked in hours"
+                    }
+                },
+                "title": "ActualsBookingResponse"
+            }
+        }
+    }
+}

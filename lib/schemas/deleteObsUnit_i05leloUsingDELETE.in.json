@@ -1,0 +1,13 @@
+{
+    "type": "object",
+    "properties": {
+        "obsTypeId": {
+            "required": true,
+            "type": "string"
+        },
+        "obsUnitId": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

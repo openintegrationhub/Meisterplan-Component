@@ -1,0 +1,63 @@
+{
+    "type": "object",
+    "properties": {
+        "requestBody": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "US"
+                },
+                "parentId": {
+                    "type": "string",
+                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                },
+                "workingHours": {
+                    "type": "object",
+                    "properties": {
+                        "monday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 8
+                        },
+                        "tuesday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 8
+                        },
+                        "wednesday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 8
+                        },
+                        "thursday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 8
+                        },
+                        "friday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 4.5
+                        },
+                        "saturday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 0
+                        },
+                        "sunday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 0
+                        }
+                    },
+                    "title": "WorkingHoursRequest"
+                }
+            },
+            "title": "CalendarCreateRequest"
+        }
+    }
+}

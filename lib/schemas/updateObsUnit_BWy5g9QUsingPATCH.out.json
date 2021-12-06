@@ -1,0 +1,26 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+        },
+        "name": {
+            "type": "string",
+            "example": "IT"
+        },
+        "path": {
+            "type": "string",
+            "example": "Services/Consulting/IT"
+        },
+        "displayName": {
+            "type": "string",
+            "example": "Services > Consulting > IT",
+            "description": "The display name is rendered the same way as it is in the Meisterplan application's user interface"
+        },
+        "parentId": {
+            "type": "string",
+            "example": "6f4e2c60-1372-4fe2-b009-8c4ddd510213"
+        }
+    }
+}

@@ -1,0 +1,73 @@
+{
+    "type": "object",
+    "properties": {
+        "projectId": {
+            "required": true,
+            "type": "string"
+        },
+        "scenarioId": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "type": "object",
+            "properties": {
+                "bookedEntity": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
+                            "description": "The id of the entity to which this actual time worked entry is linked"
+                        },
+                        "type": {
+                            "type": "string",
+                            "example": "RESOURCE",
+                            "enum": [
+                                "ROLE",
+                                "RESOURCE"
+                            ]
+                        }
+                    },
+                    "title": "ActualTimeWorkedEntityRequest"
+                },
+                "bookings": {
+                    "type": "array",
+                    "example": [
+                        {
+                            "bookingDate": "2019-01-31",
+                            "hours": 5.5
+                        }
+                    ],
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "bookingDate": {
+                                "type": "string",
+                                "format": "date",
+                                "example": "2019-01-31",
+                                "description": "Date of this booking"
+                            },
+                            "hours": {
+                                "type": "number",
+                                "format": "double",
+                                "example": 5.5,
+                                "description": "Value in hours"
+                            }
+                        },
+                        "title": "ActualsBookingRequest"
+                    }
+                },
+                "mode": {
+                    "type": "string",
+                    "example": "REPLACE",
+                    "enum": [
+                        "ADD",
+                        "REPLACE"
+                    ]
+                }
+            },
+            "title": "ActualTimeWorkedCreateOrUpdateRequest"
+        }
+    }
+}

@@ -1,0 +1,60 @@
+{
+    "type": "object",
+    "properties": {
+        "calendarId": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "US"
+                },
+                "workingHours": {
+                    "type": "object",
+                    "properties": {
+                        "monday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 8
+                        },
+                        "tuesday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 8
+                        },
+                        "wednesday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 8
+                        },
+                        "thursday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 8
+                        },
+                        "friday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 4.5
+                        },
+                        "saturday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 0
+                        },
+                        "sunday": {
+                            "type": "number",
+                            "format": "double",
+                            "example": 0
+                        }
+                    },
+                    "title": "WorkingHoursRequest"
+                }
+            },
+            "title": "CalendarUpdateRequest"
+        }
+    }
+}

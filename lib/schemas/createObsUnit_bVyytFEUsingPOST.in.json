@@ -1,0 +1,26 @@
+{
+    "type": "object",
+    "properties": {
+        "obsTypeId": {
+            "required": true,
+            "type": "string"
+        },
+        "requestBody": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "IT"
+                },
+                "parentId": {
+                    "type": "string",
+                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                }
+            },
+            "title": "ObsUnitCreateRequest"
+        }
+    }
+}
