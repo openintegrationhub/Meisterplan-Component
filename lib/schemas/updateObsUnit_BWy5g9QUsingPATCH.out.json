@@ -22,5 +22,6 @@
             "type": "string",
             "example": "6f4e2c60-1372-4fe2-b009-8c4ddd510213"
         }
-    }
+    },
+    "title": "ObsUnitResponse"
 }

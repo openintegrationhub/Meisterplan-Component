@@ -7,6 +7,11 @@
                 "lastName"
             ],
             "properties": {
+                "resourceKey": {
+                    "type": "string",
+                    "example": "KMY",
+                    "description": "Must be unique. If empty, value will be generated."
+                },
                 "firstName": {
                     "type": "string",
                     "example": "Jane"

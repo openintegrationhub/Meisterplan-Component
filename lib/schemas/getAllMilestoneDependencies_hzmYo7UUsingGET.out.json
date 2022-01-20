@@ -1,37 +1,62 @@
 {
     "type": "object",
     "properties": {
-        "id": {
-            "type": "string",
-            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
-        },
-        "from": {
+        "_pagination": {
             "type": "object",
             "properties": {
-                "milestoneId": {
-                    "type": "string",
-                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
-                },
-                "projectId": {
-                    "type": "string",
-                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                "after": {
+                    "type": "object",
+                    "properties": {
+                        "cursor": {
+                            "type": "string"
+                        }
+                    },
+                    "title": "Cursor"
                 }
             },
-            "title": "MilestoneReferenceResponse"
+            "title": "Pagination"
         },
-        "to": {
-            "type": "object",
-            "properties": {
-                "milestoneId": {
-                    "type": "string",
-                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+        "items": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                    },
+                    "from": {
+                        "type": "object",
+                        "properties": {
+                            "milestoneId": {
+                                "type": "string",
+                                "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                            },
+                            "projectId": {
+                                "type": "string",
+                                "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                            }
+                        },
+                        "title": "MilestoneReferenceResponse"
+                    },
+                    "to": {
+                        "type": "object",
+                        "properties": {
+                            "milestoneId": {
+                                "type": "string",
+                                "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                            },
+                            "projectId": {
+                                "type": "string",
+                                "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                            }
+                        },
+                        "title": "MilestoneReferenceResponse"
+                    }
                 },
-                "projectId": {
-                    "type": "string",
-                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
-                }
-            },
-            "title": "MilestoneReferenceResponse"
+                "title": "MilestoneDependencyResponse"
+            }
         }
-    }
+    },
+    "title": "PaginatedResponse«MilestoneDependencyResponse»"
 }
