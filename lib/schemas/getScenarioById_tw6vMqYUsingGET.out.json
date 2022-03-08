@@ -9,5 +9,6 @@
             "type": "string",
             "example": "More Budget Scenario"
         }
-    }
+    },
+    "title": "ScenarioResponse"
 }

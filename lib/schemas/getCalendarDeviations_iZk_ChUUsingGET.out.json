@@ -1,20 +1,30 @@
 {
     "type": "object",
     "properties": {
-        "finish": {
-            "type": "string",
-            "format": "date",
-            "example": "2019-12-31"
-        },
-        "relativeCapacity": {
-            "type": "number",
-            "format": "double",
-            "example": 0.5
-        },
-        "start": {
-            "type": "string",
-            "format": "date",
-            "example": "2019-01-31"
+        "items": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "finish": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2019-12-31"
+                    },
+                    "relativeCapacity": {
+                        "type": "number",
+                        "format": "double",
+                        "example": 0.5
+                    },
+                    "start": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2019-01-31"
+                    }
+                },
+                "title": "CalendarDeviationResponse"
+            }
         }
-    }
+    },
+    "title": "ListResponse«CalendarDeviationResponse»"
 }

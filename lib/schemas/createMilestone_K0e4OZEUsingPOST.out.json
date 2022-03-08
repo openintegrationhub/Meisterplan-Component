@@ -1,4 +1,29 @@
 {
     "type": "object",
-    "properties": {}
+    "properties": {
+        "id": {
+            "type": "string",
+            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+        },
+        "name": {
+            "type": "string",
+            "example": "Completion Initiation Phase"
+        },
+        "date": {
+            "type": "string",
+            "example": "2019-01-31",
+            "description": "format: YYYY-MM-DD"
+        },
+        "projectPhase": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Initiation"
+                }
+            },
+            "title": "ProjectPhaseResponse"
+        }
+    },
+    "title": "MilestoneResponse"
 }

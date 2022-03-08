@@ -1,105 +1,151 @@
 {
     "type": "object",
     "properties": {
-        "id": {
-            "type": "string",
-            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
-        },
-        "firstName": {
-            "type": "string",
-            "example": "Jane"
-        },
-        "lastName": {
-            "type": "string",
-            "example": "Doe"
-        },
-        "externalId": {
-            "type": "string",
-            "example": "myCustomID"
-        },
-        "emailAddress": {
-            "type": "string",
-            "example": "jane.doe@meisterplan.com"
-        },
-        "postalAddress": {
+        "_pagination": {
             "type": "object",
             "properties": {
-                "city": {
-                    "type": "string",
-                    "example": "Tübingen"
-                },
-                "country": {
-                    "type": "string",
-                    "example": "Germany"
-                },
-                "postalCode": {
-                    "type": "string",
-                    "example": 72072
-                }
-            },
-            "title": "PostalAddressResponse"
-        },
-        "employmentPeriod": {
-            "type": "object",
-            "properties": {
-                "startDate": {
-                    "type": "string",
-                    "example": "2019-01-31",
-                    "description": "format: YYYY-MM-DD"
-                },
-                "terminationDate": {
-                    "type": "string",
-                    "example": "2019-12-31",
-                    "description": "format: YYYY-MM-DD"
-                }
-            },
-            "title": "EmploymentPeriodResponse"
-        },
-        "externalResource": {
-            "type": "boolean"
-        },
-        "costPerHour": {
-            "type": "number",
-            "format": "double",
-            "example": 12.5
-        },
-        "primaryRole": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
-                },
-                "name": {
-                    "type": "string",
-                    "example": "Junior Developer"
-                },
-                "externalId": {
-                    "type": "string",
-                    "example": "myCustomID"
-                },
-                "costType": {
-                    "type": "string",
-                    "enum": [
-                        "CAPEX",
-                        "OPEX"
-                    ]
-                },
-                "costPerHour": {
-                    "type": "number",
-                    "format": "double",
-                    "example": 12.5
-                },
-                "obsUnits": {
+                "after": {
                     "type": "object",
-                    "example": {
-                        "Department": {
-                            "id": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
-                            "path": "Services/Consulting/IT",
-                            "displayName": "Services > Consulting > IT"
+                    "properties": {
+                        "cursor": {
+                            "type": "string"
                         }
                     },
-                    "additionalProperties": {
+                    "title": "Cursor"
+                }
+            },
+            "title": "Pagination"
+        },
+        "items": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                    },
+                    "resourceKey": {
+                        "type": "string",
+                        "example": "KMY"
+                    },
+                    "firstName": {
+                        "type": "string",
+                        "example": "Jane"
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "externalId": {
+                        "type": "string",
+                        "example": "myCustomID"
+                    },
+                    "emailAddress": {
+                        "type": "string",
+                        "example": "jane.doe@meisterplan.com"
+                    },
+                    "postalAddress": {
+                        "type": "object",
+                        "properties": {
+                            "city": {
+                                "type": "string",
+                                "example": "Tübingen"
+                            },
+                            "country": {
+                                "type": "string",
+                                "example": "Germany"
+                            },
+                            "postalCode": {
+                                "type": "string",
+                                "example": 72072
+                            }
+                        },
+                        "title": "PostalAddressResponse"
+                    },
+                    "employmentPeriod": {
+                        "type": "object",
+                        "properties": {
+                            "startDate": {
+                                "type": "string",
+                                "example": "2019-01-31",
+                                "description": "format: YYYY-MM-DD"
+                            },
+                            "terminationDate": {
+                                "type": "string",
+                                "example": "2019-12-31",
+                                "description": "format: YYYY-MM-DD"
+                            }
+                        },
+                        "title": "EmploymentPeriodResponse"
+                    },
+                    "externalResource": {
+                        "type": "boolean"
+                    },
+                    "costPerHour": {
+                        "type": "number",
+                        "format": "double",
+                        "example": 12.5
+                    },
+                    "primaryRole": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "Junior Developer"
+                            },
+                            "externalId": {
+                                "type": "string",
+                                "example": "myCustomID"
+                            },
+                            "costType": {
+                                "type": "string",
+                                "enum": [
+                                    "CAPEX",
+                                    "OPEX"
+                                ]
+                            },
+                            "costPerHour": {
+                                "type": "number",
+                                "format": "double",
+                                "example": 12.5
+                            },
+                            "obsUnits": {
+                                "type": "object",
+                                "example": {
+                                    "Department": {
+                                        "id": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
+                                        "path": "Services/Consulting/IT",
+                                        "displayName": "Services > Consulting > IT"
+                                    }
+                                },
+                                "additionalProperties": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                        },
+                                        "displayName": {
+                                            "type": "string",
+                                            "description": "The display name is rendered the same way as it is in the Meisterplan application's user interface"
+                                        }
+                                    },
+                                    "title": "ObsUnitReferenceResponse"
+                                }
+                            }
+                        },
+                        "title": "RoleResponse"
+                    },
+                    "calendar": {
                         "type": "object",
                         "properties": {
                             "id": {
@@ -108,70 +154,53 @@
                             },
                             "path": {
                                 "type": "string",
-                                "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
-                            },
-                            "displayName": {
-                                "type": "string",
-                                "description": "The display name is rendered the same way as it is in the Meisterplan application's user interface"
+                                "example": "Default"
                             }
                         },
-                        "title": "ObsUnitReferenceResponse"
-                    }
-                }
-            },
-            "title": "RoleResponse"
-        },
-        "calendar": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
-                },
-                "path": {
-                    "type": "string",
-                    "example": "Default"
-                }
-            },
-            "title": "ResourceCalendarResponse"
-        },
-        "obsUnits": {
-            "type": "object",
-            "example": {
-                "Department": {
-                    "id": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
-                    "path": "Services/Consulting/IT",
-                    "displayName": "Services > Consulting > IT"
-                }
-            },
-            "additionalProperties": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                        "title": "ResourceCalendarResponse"
                     },
-                    "path": {
-                        "type": "string",
-                        "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                    "obsUnits": {
+                        "type": "object",
+                        "example": {
+                            "Department": {
+                                "id": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
+                                "path": "Services/Consulting/IT",
+                                "displayName": "Services > Consulting > IT"
+                            }
+                        },
+                        "additionalProperties": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                },
+                                "path": {
+                                    "type": "string",
+                                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                },
+                                "displayName": {
+                                    "type": "string",
+                                    "description": "The display name is rendered the same way as it is in the Meisterplan application's user interface"
+                                }
+                            },
+                            "title": "ObsUnitReferenceResponse"
+                        }
                     },
-                    "displayName": {
-                        "type": "string",
-                        "description": "The display name is rendered the same way as it is in the Meisterplan application's user interface"
+                    "skills": {
+                        "type": "array",
+                        "example": [
+                            "Java",
+                            "Kotlin"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
                     }
                 },
-                "title": "ObsUnitReferenceResponse"
-            }
-        },
-        "skills": {
-            "type": "array",
-            "example": [
-                "Java",
-                "Kotlin"
-            ],
-            "items": {
-                "type": "string"
+                "title": "ResourceResponse"
             }
         }
-    }
+    },
+    "title": "PaginatedResponse«ResourceResponse»"
 }

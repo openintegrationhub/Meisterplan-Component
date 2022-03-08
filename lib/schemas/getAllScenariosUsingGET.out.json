@@ -1,13 +1,23 @@
 {
     "type": "object",
     "properties": {
-        "id": {
-            "type": "string",
-            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
-        },
-        "name": {
-            "type": "string",
-            "example": "More Budget Scenario"
+        "items": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "More Budget Scenario"
+                    }
+                },
+                "title": "ScenarioResponse"
+            }
         }
-    }
+    },
+    "title": "ListResponse«ScenarioResponse»"
 }
