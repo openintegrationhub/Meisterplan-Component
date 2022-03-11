@@ -1,4 +1,62 @@
 {
     "type": "object",
-    "properties": {}
+    "properties": {
+        "id": {
+            "type": "string",
+            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+        },
+        "type": {
+            "type": "string",
+            "example": "CAPEX",
+            "enum": [
+                "CAPEX",
+                "OPEX",
+                "BENEFIT"
+            ]
+        },
+        "amount": {
+            "type": "number",
+            "format": "double",
+            "example": 12.5
+        },
+        "timing": {
+            "type": "object",
+            "properties": {
+                "on": {
+                    "type": "string",
+                    "example": "Milestone",
+                    "enum": [
+                        "ProjectStart",
+                        "ProjectFinish",
+                        "Milestone",
+                        "Date"
+                    ]
+                },
+                "milestoneId": {
+                    "type": "string",
+                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
+                    "description": "Only present when timing type equals Milestone"
+                },
+                "dueDate": {
+                    "type": "string",
+                    "format": "date"
+                }
+            },
+            "title": "FinancialsTimingResponse"
+        },
+        "description": {
+            "type": "string"
+        },
+        "category": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "ROI"
+                }
+            },
+            "title": "FinanceCategoryResponse"
+        }
+    },
+    "title": "FinancialsResponse"
 }

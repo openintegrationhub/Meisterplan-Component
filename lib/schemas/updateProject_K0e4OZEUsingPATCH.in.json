@@ -51,7 +51,6 @@
                     ]
                 },
                 "status": {
-                    "description": "default: see Meisterplan documentation.",
                     "type": "object",
                     "properties": {
                         "value": {
@@ -60,15 +59,13 @@
                             "description": "<h4>Missing values will be created automatically</h4>\n    <p>If you import an unknown value, it will be automatically created for you in Meisterplan.</p>"
                         }
                     },
-                    "title": "StatusFieldRequest"
+                    "title": "StatusFieldRequest",
+                    "description": "default: see Meisterplan documentation."
                 },
                 "notes": {
                     "type": "string"
                 },
                 "businessGoal": {
-                    "example": {
-                        "name": "Change the Business"
-                    },
                     "type": "object",
                     "properties": {
                         "name": {
@@ -77,7 +74,10 @@
                             "description": "<h4>Missing values will be created automatically</h4>\n    <p>If you import an unknown value, it will be automatically created for you in Meisterplan.</p>"
                         }
                     },
-                    "title": "BusinessGoalRequest"
+                    "title": "BusinessGoalRequest",
+                    "example": {
+                        "name": "Change the Business"
+                    }
                 },
                 "approvedTotalEffort": {
                     "type": "object",

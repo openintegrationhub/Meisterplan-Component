@@ -1,23 +1,33 @@
 {
     "type": "object",
     "properties": {
-        "date": {
-            "type": "string",
-            "format": "date",
-            "example": "2019-01-31"
-        },
-        "workingHours": {
-            "type": "number",
-            "format": "double",
-            "example": 4
-        },
-        "description": {
-            "type": "string",
-            "example": "New Year's Eve"
-        },
-        "sourceCalendarId": {
-            "type": "string",
-            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+        "items": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2019-01-31"
+                    },
+                    "workingHours": {
+                        "type": "number",
+                        "format": "double",
+                        "example": 4
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "New Year's Eve"
+                    },
+                    "sourceCalendarId": {
+                        "type": "string",
+                        "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                    }
+                },
+                "title": "CalendarExceptionResponse"
+            }
         }
-    }
+    },
+    "title": "ListResponse«CalendarExceptionResponse»"
 }

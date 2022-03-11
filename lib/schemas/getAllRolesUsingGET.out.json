@@ -1,57 +1,67 @@
 {
     "type": "object",
     "properties": {
-        "id": {
-            "type": "string",
-            "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
-        },
-        "name": {
-            "type": "string",
-            "example": "Junior Developer"
-        },
-        "externalId": {
-            "type": "string",
-            "example": "myCustomID"
-        },
-        "costType": {
-            "type": "string",
-            "enum": [
-                "CAPEX",
-                "OPEX"
-            ]
-        },
-        "costPerHour": {
-            "type": "number",
-            "format": "double",
-            "example": 12.5
-        },
-        "obsUnits": {
-            "type": "object",
-            "example": {
-                "Department": {
-                    "id": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
-                    "path": "Services/Consulting/IT",
-                    "displayName": "Services > Consulting > IT"
-                }
-            },
-            "additionalProperties": {
+        "items": {
+            "type": "array",
+            "items": {
                 "type": "object",
                 "properties": {
                     "id": {
                         "type": "string",
                         "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
                     },
-                    "path": {
+                    "name": {
                         "type": "string",
-                        "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                        "example": "Junior Developer"
                     },
-                    "displayName": {
+                    "externalId": {
                         "type": "string",
-                        "description": "The display name is rendered the same way as it is in the Meisterplan application's user interface"
+                        "example": "myCustomID"
+                    },
+                    "costType": {
+                        "type": "string",
+                        "enum": [
+                            "CAPEX",
+                            "OPEX"
+                        ]
+                    },
+                    "costPerHour": {
+                        "type": "number",
+                        "format": "double",
+                        "example": 12.5
+                    },
+                    "obsUnits": {
+                        "type": "object",
+                        "example": {
+                            "Department": {
+                                "id": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da",
+                                "path": "Services/Consulting/IT",
+                                "displayName": "Services > Consulting > IT"
+                            }
+                        },
+                        "additionalProperties": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                },
+                                "path": {
+                                    "type": "string",
+                                    "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                },
+                                "displayName": {
+                                    "type": "string",
+                                    "description": "The display name is rendered the same way as it is in the Meisterplan application's user interface"
+                                }
+                            },
+                            "title": "ObsUnitReferenceResponse"
+                        }
                     }
                 },
-                "title": "ObsUnitReferenceResponse"
+                "title": "RoleResponse"
             }
         }
-    }
+    },
+    "title": "ListResponse«RoleResponse»"
 }

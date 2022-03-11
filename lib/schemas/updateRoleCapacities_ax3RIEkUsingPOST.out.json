@@ -1,23 +1,36 @@
 {
     "type": "object",
     "properties": {
-        "start": {
-            "type": "string",
-            "format": "date",
-            "example": "2019-01-31",
-            "description": "Start date of this role capacity segment. Optional."
-        },
-        "finish": {
-            "type": "string",
-            "format": "date",
-            "example": "2019-12-31",
-            "description": "End date of this role capacity segment. Optional."
-        },
-        "fte": {
-            "type": "number",
-            "format": "double",
-            "example": 0.5,
-            "description": "The role's capacity in FTE"
+        "items": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "fte"
+                ],
+                "properties": {
+                    "start": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2019-01-31",
+                        "description": "Start date of this role capacity segment. Optional."
+                    },
+                    "finish": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2019-12-31",
+                        "description": "End date of this role capacity segment. Optional."
+                    },
+                    "fte": {
+                        "type": "number",
+                        "format": "double",
+                        "example": 0.5,
+                        "description": "The role's capacity in FTE"
+                    }
+                },
+                "title": "RoleCapacityResponse"
+            }
         }
-    }
+    },
+    "title": "ListResponse«RoleCapacityResponse»"
 }

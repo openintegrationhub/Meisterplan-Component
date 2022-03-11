@@ -1912,7 +1912,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Stringified JSON object with a subset of properties of the expected object.\n                               Selects all objects that exactly match the specified properties.\n                               Note: take care to URL encode your parameter.\n \n    {\n        \"lastName\": string,\n        \"externalId\": string,\n        \"emailAddress\": string,\n        \"postalAddress\": {\n            \"city\": string,\n            \"country\": string,\n            \"postalCode\": string\n        }\n    }\n",
+                        "description": "Stringified JSON object with a subset of properties of the expected object.\n                               Selects all objects that exactly match the specified properties.\n                               Note: take care to URL encode your parameter.\n \n    {\n        \"resourceKey\": string,\n        \"lastName\": string,\n        \"externalId\": string,\n        \"emailAddress\": string,\n        \"postalAddress\": {\n            \"city\": string,\n            \"country\": string,\n            \"postalCode\": string\n        }\n    }\n",
                         "required": false,
                         "allowEmptyValue": false,
                         "example": "{ \"externalId\": \"myCustomID\" }",
@@ -1980,6 +1980,10 @@
                                                     "id": {
                                                         "type": "string",
                                                         "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                                    },
+                                                    "resourceKey": {
+                                                        "type": "string",
+                                                        "example": "KMY"
                                                     },
                                                     "firstName": {
                                                         "type": "string",
@@ -2198,6 +2202,11 @@
                                     "lastName"
                                 ],
                                 "properties": {
+                                    "resourceKey": {
+                                        "type": "string",
+                                        "example": "KMY",
+                                        "description": "Must be unique. If empty, value will be generated."
+                                    },
                                     "firstName": {
                                         "type": "string",
                                         "example": "Jane"
@@ -2337,6 +2346,10 @@
                                         "id": {
                                             "type": "string",
                                             "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                        },
+                                        "resourceKey": {
+                                            "type": "string",
+                                            "example": "KMY"
                                         },
                                         "firstName": {
                                             "type": "string",
@@ -2570,6 +2583,10 @@
                                         "id": {
                                             "type": "string",
                                             "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                        },
+                                        "resourceKey": {
+                                            "type": "string",
+                                            "example": "KMY"
                                         },
                                         "firstName": {
                                             "type": "string",
@@ -2847,6 +2864,11 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
+                                    "resourceKey": {
+                                        "type": "string",
+                                        "example": "KMY",
+                                        "description": "Must be unique. If empty, value will be generated."
+                                    },
                                     "firstName": {
                                         "type": "string",
                                         "example": "Jane"
@@ -2983,6 +3005,10 @@
                                         "id": {
                                             "type": "string",
                                             "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                        },
+                                        "resourceKey": {
+                                            "type": "string",
+                                            "example": "KMY"
                                         },
                                         "firstName": {
                                             "type": "string",
@@ -4976,7 +5002,7 @@
                     {
                         "name": "filter",
                         "in": "query",
-                        "description": "Stringified JSON object with a subset of properties of the expected object.\n                               Selects all objects that exactly match the specified properties.\n                               Projects are searchable by <tt>name</tt>, <tt>externalId</tt>, <tt>programId</tt>, <tt>portfolioId</tt>,\n                               and custom fields of the <tt>String</tt> and <tt>Integer</tt> type. Integers must be encoded as JSON string.\n                               The filter <tt>programId = null</tt> will yield all projects that are not associated with a program.\n                               Furthermore, the filter <tt>portfolioId = null</tt> will yield all projects.\n                               Note: take care to URL encode your parameter.\n \n    {\n        \"name\": string,\n        \"externalId\": string,\n        \"programId\": string,\n        \"portfolioId\": string,\n        \"customFields\": {\n            \"cust_field_1\": string,\n            \"cust_field_2\": string,\n            ....\n        }\n    }\n",
+                        "description": "Stringified JSON object with a subset of properties of the expected object.\n                               Selects all objects that exactly match the specified properties.\n                               Projects are searchable by <tt>projectKey</tt>, <tt>name</tt>, <tt>externalId</tt>, <tt>programId</tt>, <tt>portfolioId</tt>,\n                               and custom fields of the <tt>String</tt> and <tt>Integer</tt> type. Integers must be encoded as JSON string.\n                               The filter <tt>programId = null</tt> will yield all projects that are not associated with a program.\n                               Furthermore, the filter <tt>portfolioId = null</tt> will yield all projects.\n                               Note: take care to URL encode your parameter.\n \n    {\n        \"projectKey\": string,\n        \"name\": string,\n        \"externalId\": string,\n        \"programId\": string,\n        \"portfolioId\": string,\n        \"customFields\": {\n            \"cust_field_1\": string,\n            \"cust_field_2\": string,\n            ....\n        }\n    }\n",
                         "required": false,
                         "allowEmptyValue": false,
                         "example": "{\"customFields\": {\"cust_prj_number\": \"PR001\"}}",
@@ -6013,7 +6039,6 @@
                                         ]
                                     },
                                     "status": {
-                                        "description": "default: see Meisterplan documentation.",
                                         "type": "object",
                                         "properties": {
                                             "value": {
@@ -6022,15 +6047,13 @@
                                                 "description": "<h4>Missing values will be created automatically</h4>\n    <p>If you import an unknown value, it will be automatically created for you in Meisterplan.</p>"
                                             }
                                         },
-                                        "title": "StatusFieldRequest"
+                                        "title": "StatusFieldRequest",
+                                        "description": "default: see Meisterplan documentation."
                                     },
                                     "notes": {
                                         "type": "string"
                                     },
                                     "businessGoal": {
-                                        "example": {
-                                            "name": "Change the Business"
-                                        },
                                         "type": "object",
                                         "properties": {
                                             "name": {
@@ -6039,7 +6062,10 @@
                                                 "description": "<h4>Missing values will be created automatically</h4>\n    <p>If you import an unknown value, it will be automatically created for you in Meisterplan.</p>"
                                             }
                                         },
-                                        "title": "BusinessGoalRequest"
+                                        "title": "BusinessGoalRequest",
+                                        "example": {
+                                            "name": "Change the Business"
+                                        }
                                     },
                                     "approvedTotalEffort": {
                                         "type": "object",
@@ -9279,7 +9305,7 @@
     },
     "servers": [
         {
-            "url": "//api.eu.meisterplan.com"
+            "url": "https://api.eu.meisterplan.com"
         }
     ],
     "components": {
@@ -11884,7 +11910,6 @@
                         ]
                     },
                     "status": {
-                        "description": "default: see Meisterplan documentation.",
                         "type": "object",
                         "properties": {
                             "value": {
@@ -11893,15 +11918,13 @@
                                 "description": "<h4>Missing values will be created automatically</h4>\n    <p>If you import an unknown value, it will be automatically created for you in Meisterplan.</p>"
                             }
                         },
-                        "title": "StatusFieldRequest"
+                        "title": "StatusFieldRequest",
+                        "description": "default: see Meisterplan documentation."
                     },
                     "notes": {
                         "type": "string"
                     },
                     "businessGoal": {
-                        "example": {
-                            "name": "Change the Business"
-                        },
                         "type": "object",
                         "properties": {
                             "name": {
@@ -11910,7 +11933,10 @@
                                 "description": "<h4>Missing values will be created automatically</h4>\n    <p>If you import an unknown value, it will be automatically created for you in Meisterplan.</p>"
                             }
                         },
-                        "title": "BusinessGoalRequest"
+                        "title": "BusinessGoalRequest",
+                        "example": {
+                            "name": "Change the Business"
+                        }
                     },
                     "approvedTotalEffort": {
                         "type": "object",
@@ -12057,6 +12083,11 @@
                     "lastName"
                 ],
                 "properties": {
+                    "resourceKey": {
+                        "type": "string",
+                        "example": "KMY",
+                        "description": "Must be unique. If empty, value will be generated."
+                    },
                     "firstName": {
                         "type": "string",
                         "example": "Jane"
@@ -12186,6 +12217,10 @@
                     "id": {
                         "type": "string",
                         "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                    },
+                    "resourceKey": {
+                        "type": "string",
+                        "example": "KMY"
                     },
                     "firstName": {
                         "type": "string",
@@ -12361,6 +12396,11 @@
             "ResourceUpdateRequest": {
                 "type": "object",
                 "properties": {
+                    "resourceKey": {
+                        "type": "string",
+                        "example": "KMY",
+                        "description": "Must be unique. If empty, value will be generated."
+                    },
                     "firstName": {
                         "type": "string",
                         "example": "Jane"
@@ -13871,6 +13911,10 @@
                                 "id": {
                                     "type": "string",
                                     "example": "0b9e0e29-8d87-4db8-baa8-1b1a49e354da"
+                                },
+                                "resourceKey": {
+                                    "type": "string",
+                                    "example": "KMY"
                                 },
                                 "firstName": {
                                     "type": "string",

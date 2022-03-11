@@ -1,6 +1,6 @@
 {
     "title": "Meisterplan API",
-    "description": "# Introduction\n\nThe Meisterplan API provides machine-readable access to a Meisterplan system via an HTTP-based JSON REST interface. ",
+    "description": "# Introduction\n\nThe Meisterplan API provides machine-readable access to a Meisterplan system via an HTTP-based JSON REST interface.\nThis page will show you how to [get started](#section/Get-Started), and how you can [use the API to interact with your Meisterplan system](#section/General-Information).\n\n## Want to load data into external BI tools?\nCreate reports using the [Reporting API](https://help.meisterplan.com/hc/en-us/articles/360013641220), which provides data optimized for reporting.\n\n## Versioning and Changes\n\nWe will continuously expand this API's functionality and add bug fixes (see the changelog [here](https://help.meisterplan.com/hc/en-us/articles/360024302652-Meisterplan-REST-API-Changelog)).\nFor best results, make sure your code can handle new JSON properties and does not depend on the order in which JSON objects are returned by the API, unless explicitly stated here.\n\n## Support\n\nIf you have any questions, email us at [support@meisterplan.com](mailto:support@meisterplan.com) - we're happy to help!\n\n[API Changelog](https://help.meisterplan.com/hc/en-us/articles/360024302652-Meisterplan-REST-API-Changelog)\n\n[Meisterplan Help Center](https://help.meisterplan.com/)\n\n[Meisterplan Terms of Service](https://meisterplan.com/terms-of-service/)\n\n# Authentication\n\nYou will need a [Meisterplan system](#section/Get-Started/Meisterplan-System) and an [API Token](#section/Authentication/API-Token) for your\n user.\nYou can then proceed to look at the [examples](#section/Get-Started).\nPlease also take a look at the [general information](#section/General-Information) which will give you an overview of how the API works.\n\n## API Token\n\nYou can generate API tokens via the Meisterplan user interface.\nPlease take a look at the [help center](https://help.meisterplan.com/hc/en-us/articles/360028700752-REST-API-Manage-API-Tokens) how to generate API tokens.\nYour token will look like this: `api-48eba51e5a8d43ed8a8daeba585b7093`.\nNote that the letters `api-` are part of the token.\nWith this token, you can start building your integration.\nIf you need more help, see [this page](https://help.meisterplan.com/hc/en-us/articles/360028700752-Manage-REST-API-Tokens).\n\n# Get Started\n\nThe following examples will use [cURL](https://curl.haxx.se/) to show you how to use the API from the command line.\n\n## Meisterplan System\n\nStart by getting an API token from your Meisterplan system (free trials available at [meisterplan.com/trial](https://meisterplan.com/trial/)).\nThe API URL of your Meisterplan system will depend on your region, either `https://api.us.meisterplan.com/v1/` for\n the US or `https://api.eu.meisterplan.com/v1` for the EU.\nYou do not have to specify your system name in the URL, as it is already encoded in the [API token](#section/Get-Started/API-Token).\n\nLet's assume you have a [Meisterplan system](#section/Get-Started/Meisterplan-System) in the US and the [API token](#section/Get-Started/API-Token) `api-xxx`.\n\n## Headers\n\nTo perform your own requests against the API, you must provide an `Authorization` header on every HTTP request.\n\n```\nAuthorization: \"api-xxx\"\n```\n\nAn HTTP status code 401 will be returned if you are not authorized to access the API.\n\nAdditionally, all `PATCH` and `POST` requests require you to specify the accepted MIME type with the following header:\n```\nContent-Type: application/json\n```\n\nRequests without a `User-Agent` will be rejected with HTTP status code 403. Note that in this case an HTML error page will be returned as opposed to a JSON\nresponse. Most tools provide a user-agent on their own. If this is not the case, please provide one in the following form:\n\n```\nUser-Agent: \"<product> / <product-version> <comment>\"\n```\n\n## Resources\n\n**Please note**: The following examples assume you're running an [`sh`-compatible](https://en.wikipedia.org/wiki/Bourne_shell) shell or `cmd.exe` and have access to the [`curl`](https://curl.haxx.se/) command. Using `curl` in [MicroSoft PowerShell](https://docs.microsoft.com/en-us/powershell/) will **not** trigger the `curl` command, but will instead call [`Invoke-RestMethod`](https://docs.microsoft.com/en-us/powershell/module/Microsoft.PowerShell.Utility/Invoke-RestMethod?view=powershell-5.1), which has an incompatible command argument syntax. Using `curl` is not a necessary prerequisite to using the Meisterplan REST API, and you are free to use any tool that suits your requirements.\n\nThe following call will [create a new resource](#operation/createResourceUsingPOST) in your Meisterplan instance:\n\n`sh`-compatible shell:\n```\ncurl -s \"https://api.us.meisterplan.com/v1/resources\" \\\n  -H \"Authorization: api-xxx\" \\\n  -H \"Content-Type: application/json\" \\\n  --data \"{ \\\"lastName\\\": \\\"Stine\\\", \\\"firstName\\\": \\\"Brandon\\\" }\"\n```\n\nWindows Console (`cmd.exe`):\n```\ncurl -s \"https://api.us.meisterplan.com/v1/resources\" ^\n  -H \"Authorization: api-xxx\" ^\n  -H \"Content-Type: application/json\" ^\n  --data \"{ \\\"lastName\\\": \\\"Stine\\\", \\\"firstName\\\": \\\"Brandon\\\" }\"\n```\n\nThe answer will look similar to the following (the internal and external IDs will be different for your response):\n\n```\n{\n  \"id\" : \"50703a7a-9285-4ffe-9e29-47187c454ade\",\n  \"firstName\" : \"Brandon\",\n  \"lastName\" : \"Stine\",\n  \"externalId\" : \"96bb0fbc-a7e0-4ee3-b456-dbf390960268\",\n  // ... more fields\n}\n```\n\nYou can [retrieve your new resouce](#operation/getResourceByIdUsingGET) using its ID:\n\n`sh`-compatible shell:\n```\ncurl -s \"https://api.us.meisterplan.com/v1/resources/50703a7a-9285-4ffe-9e29-47187c454ade\" \\\n  -H \"Authorization: api-xxx\"\n```\n\nWindows Console (`cmd.exe`):\n```\ncurl -s \"https://api.us.meisterplan.com/v1/resources/50703a7a-9285-4ffe-9e29-47187c454ade\" ^\n  -H \"Authorization: api-xxx\"\n```\n\nYou can [update a resource](#operation/updateResourceUsingPATCH) using the `PATCH` method. Let's give Brandon an email address:\n\n`sh`-compatible shell:\n```\ncurl -s \"https://api.us.meisterplan.com/v1/resources/50703a7a-9285-4ffe-9e29-47187c454ade\" \\\n  -H \"Authorization: api-xxx\" \\\n  -H \"Content-Type: application/json\" \\\n  --data \"{ \\\"emailAddress\\\": \\\"brandon.stines@example.com\\\" }\" \\\n  -X PATCH\n```\n\nWindows Console (`cmd.exe`):\n```\ncurl -s \"https://api.us.meisterplan.com/v1/resources/50703a7a-9285-4ffe-9e29-47187c454ade\" ^\n  -H \"Authorization: api-xxx\" ^\n  -H \"Content-Type: application/json\" ^\n  --data \"{ \\\"emailAddress\\\": \\\"brandon.stines@example.com\\\" }\" ^\n  -X PATCH\n```\n\nYou will notice that the email field in the response is now set to the new email address:\n\n```\n{\n  \"id\" : \"50703a7a-9285-4ffe-9e29-47187c454ade\",\n  \"firstName\" : \"Brandon\",\n  \"lastName\" : \"Stine\",\n  \"emailAddress\" : \"brandon.stines@example.com\",\n  // ...\n}\n```\n\nYou can also [list all available resources](#operation/getAllResourcesUsingGET) by omitting the ID:\n\n`sh`-compatible shell:\n```\ncurl -s \"https://api.us.meisterplan.com/v1/resources\" \\\n  -H \"Authorization: api-xxx\"\n```\n\nWindows Console (`cmd.exe`):\n```\ncurl -s \"https://api.us.meisterplan.com/v1/resources\" ^\n  -H \"Authorization: api-xxx\"\n```\n\nThe answer will look like this:\n\n```\n{\n  \"items\": [\n    // ...all resources\n  ]\n  \"_pagination\": {\n    \"after\": {\n      \"cursor\": \"ZjkyYjU1MDItNTAwYi00Yzg1LWEwOGItMzllZWU1NWE4ZTlk\"\n    }\n  }\n}\n```\n\nThe resource endpoint is [paginated](#section/General-Information/Pagination).\nLet's get some more resources:\n\n`sh`-compatible shell:\n```\ncurl -s \"https://api.us.meisterplan.com/v1/resources?pageSize=16&pageAfter=MDAzNWQ5MDctOTZkNi00MzdjLWE4MmUtMzNiZDBjNjdiNmM1\" \\\n  -H \"Authorization: api-xxx\"\n```\n\nWindows Console (`cmd.exe`):\n```\ncurl -s \"https://api.us.meisterplan.com/v1/resources?pageSize=16&pageAfter=MDAzNWQ5MDctOTZkNi00MzdjLWE4MmUtMzNiZDBjNjdiNmM1\" ^\n  -H \"Authorization: api-xxx\"\n```\n\nIf no more resources are available in your system, the request will return an empty list.\n\n## Projects and Scenarios\n\n[Projects](#tag/Projects) are linked to their [scenarios](#tag/Scenarios) in Meisterplan.\nYou can only address projects through their scenario ID.\nYou can query Meisterplan for [all scenarios](#operation/getAllScenariosUsingGET):\n\n`sh`-compatible shell:\n```\ncurl -s \"https://api.us.meisterplan.com/v1/scenarios\" \\\n  -H \"Authorization: api-xxx\"\n```\n\nWindows Console (`cmd.exe`):\n```\ncurl -s \"https://api.us.meisterplan.com/v1/scenarios\" ^\n  -H \"Authorization: api-xxx\"\n```\n\nThe answer will look like this:\n\n```\n{\n  \"items\" : [ {\n    \"id\" : \"2b45a678-8bd3-4e5e-acd9-1e817b530204\",\n    \"name\" : \"Proposed Portfolio going forward\"\n  }, {\n    \"id\" : \"7a36777f-00d7-dd0b-2468-95aa94f90e63\",\n    \"name\" : \"Plan of Record\"\n  } ]\n}\n```\n\nYou can then use a scenario's ID to retrieve a project.\nNote that the special scenario *Plan of Record* always exists.\nYou can use it in the URL instead of using its ID.\nLet's [retrieve all projects](#operation/getAllProjects-AMtyOPcUsingGET) in the *Plan of Record*:\n\n`sh`-compatible shell:\n```\ncurl -s \"https://api.us.meisterplan.com/v1/scenarios/PlanOfRecord/projects\" \\\n  -H \"Authorization: api-xxx\"\n```\n\nWindows Console (`cmd.exe`):\n```\ncurl -s \"https://api.us.meisterplan.com/v1/scenarios/PlanOfRecord/projects\" ^\n  -H \"Authorization: api-xxx\"\n```\n\n\nYou can also create new projects and edit existing ones just like you can resources.\nLet's [create a new project](#operation/createProject-QWGM0WIUsingPOST) in the *Plan of Record* with Brandon as its project manager:\n\n`sh`-compatible shell:\n```\ncurl -s \"https://api.us.meisterplan.com/v1/scenarios/PlanOfRecord/projects\" \\\n  -H \"Authorization: api-xxx\" \\\n  -H \"Content-Type: application/json\" \\\n  --data \"{ \\\"name\\\": \\\"Company-wide roll-out of Meisterplan\\\", \\\"start\\\": \\\"2020-01-31\\\", \\\"finish\\\": \\\"2020-02-14\\\", \\\"manager\\\": { \\\"id\\\": \\\"50703a7a-9285-4ffe-9e29-47187c454ade\\\" } }\"\n```\n\nWindows Console (`cmd.exe`):\n```\ncurl -s \"https://api.us.meisterplan.com/v1/scenarios/PlanOfRecord/projects\" ^\n  -H \"Authorization: api-xxx\" ^\n  -H \"Content-Type: application/json\" ^\n  --data \"{ \\\"name\\\": \\\"Company-wide roll-out of Meisterplan\\\", \\\"start\\\": \\\"2020-01-31\\\", \\\"finish\\\": \\\"2020-02-14\\\", \\\"manager\\\": { \\\"id\\\": \\\"50703a7a-9285-4ffe-9e29-47187c454ade\\\" } }\"\n```\n\nNotice how we've provided Brandon's *internal ID* to link him to the new project as its project manager.\n\n# General Information\n\n## HTTP Methods\n\nThe Meisterplan API recognizes the HTTP methods: `POST`, `GET`, and `PATCH` and `DELETE`.\nThey correspond to the _create_, _read_, _update_ and _delete_ operations.\nThe endpoints for creating and updating an entity will always respond with the newly created or updated entity in their response payload.\nIf successful, `POST` endpoints will respond with HTTP status code `201` and `PATCH` with endpoints with `200`.\nDeleting an entity will result in no body and an HTTP status code `204`, if successful.\n\n### HTTP Method Override\n\nIf your firewall does not permit certain HTTP methods from being executed, you may override the HTTP request method with the `X-HTTP-Method-Override` header. The following request:\n\n    POST /v1/resources/123 HTTP/1.1\n    X-HTTP-Method-Override: PATCH\n\nwill be interpreted as a `PATCH` request against the resource with the id `123` by the server.\n\n## IDs\n\nAll entities carry an internal Meisterplan ID in the JSON property `id`, which can be used for reference in other requests, or for updates and deletions.\nAdditionally, Meisterplan allows you to set a **unique** `externalId` for some entities.\nThe `externalId` can be used to cross-reference a Meisterplan entity with your own system.\nThe `externalId` is never used by Meisterplan.\n\n## Pagination\n\nSome endpoints return paginated data.\nIn order to access the next page, an opaque cursor is provided in the response to your `GET` request, which can be passed as a query parameter `pageAfter` on a subsequent request.\nYou can control the page size with the `pageSize` query parameter.\nThe following URL will return 16 items following the given opaque cursor:\n\n```\nhttps://api.us.meisterplan.com/v1/resources?pageSize=16&pageAfter=MDAzNWQ5MDctOTZkNi00MzdjLWE4MmUtMzNiZDBjNjdiNmM1\n```\n\n## Filtering\n\nIn order to find a certain entity, all paginated endpoints allow for filtering using the `filter` query parameter.\nThe filter will look for entities matching _all_ of the provided values _exactly_.\nAll properties of the filter object are optional.\nAn empty filter results in all entities being returned.\nFilter values of `null` are ignored.\nThe following URL will retrieve all resources with the external id `brandon.s`:\n\n```\nhttps://api.us.meisterplan.com/v1/resources?filter={\"externalId\":\"brandon.s\"}\n```\n\nNote that depending on your environment, you may need to URL-Encode the filter:\n\n```\nhttps://api.us.meisterplan.com/v1/resources?filter=%7B%22externalId%22%3A%22brandon.s%22%7D\n```\n\nNot all fields can be used in a filter.\nTo see which fields are available, refer to the endpoint's documentation.\nLook for the `filter` query parameter and the example model, which lists all available fields.\n\n## Updating Fields\n\nFields of existing entities can be updated via HTTP `PATCH`. In order to delete a field's content, or replace it with its default value, if any, set the field to `null`. Only the specified fields will be changed. Fields not specified in the `PATCH` body will not be affected.\n\nNested objects **are not** deleted recursively by setting their parent property to `null`. Delete the respective sub-fields by individually setting them to `null`. Fields whose values are objects with only **one** property (such as a resource's `calendar` or `primaryRole` whose only sub-field is `path` and `id`, respectively) **are the exception**. You can delete a resource's association with a given calendar or primary role by setting `{ \"calendar\": null }` or `{ \"primaryRole\": null }`.\n\n## Error Handling\n\nThe error messages generated by the Meisterplan API follow the [JSON API specification](https://jsonapi.org/examples/#error-objects) on error objects.\nIf your request was not valid, HTTP status code 400 will be returned, along with a JSON object detailing the cause of the error.\n\nIf you did not have sufficient permissions to perform the request (e.g. attempting to access a field for which you have no permission), HTTP status code 403 will be returned.\n\n## Dates\n\n### Format\nThe Meisterplan API uses the [ISO8601 date format](https://www.iso.org/iso-8601-date-and-time-format.html) for all dates:\n\n`YYYY-MM-DD`\n\nFor example, September 27, 2020 is represented as `2020-09-27`.\n\nThe earliest possible date is `1970-01-01`. The latest possible date is `2079-07-02`.\n\n### Time Periods\nStart dates of time periods are interpreted as the beginning of a day.\nFor example, `2020-09-27` will be interpreted as September 27, 2020 at 12:00am.\n\nFinish dates of time periods are interpreted as the end of a day.\nFor example, `2020-09-27` will be interpreted as September 27, 2020 at 11:59pm.\n\n## Rate Limiting\n\nIn order to prevent outages and to make sure the API is fast for everyone, the Meisterplan API will rate limit requests.\nThe API allows for at least 300 requests per minute, per user.\nPlease ensure you do not call the API with multiple concurrent requests, as some requests cannot be performed in parallel.\nIf you have exceeded the rate limit, an HTTP status code 429 will be returned.\nIf you happen to be rate-limited, we recommend you use [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) method for retries.\nWe reserve the right to change these guidelines to ensure the API's availability.\n",
     "docsUrl": "",
     "url": "https://api.eu.meisterplan.com/swagger.json",
     "envVars": {},
@@ -10,7 +10,7 @@
                 "label": "Server",
                 "viewClass": "SelectView",
                 "model": [
-                    "//api.eu.meisterplan.com",
+                    "https://api.eu.meisterplan.com",
                     "--- Custom URL"
                 ],
                 "required": true
@@ -26,8 +26,13 @@
         }
     },
     "triggers": {
+        "lookup": {
+            "main": "./lib/lookups/lookup.js",
+            "title": "Function to run a lookup",
+            "description": "Function to call an internal trigger or action"
+        },
         "getAllBusinessGoalsUsingGET": {
-            "main": "./lib/triggers/getAllBusinessGoalsUsingGET.js",
+            "main": "./lib/triggers/trigger.js",
             "title": "Business goals",
             "description": "Returns all business goals",
             "fields": {
@@ -36,88 +41,131 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/businessGoals",
+                "method": "get"
+            },
             "metadata": {
                 "in": "./lib/schemas/getAllBusinessGoalsUsingGET.in.json",
                 "out": "./lib/schemas/getAllBusinessGoalsUsingGET.out.json"
             }
         },
-        "getAllPortfoliosUsingGET": {
-            "main": "./lib/triggers/getAllPortfoliosUsingGET.js",
-            "title": "Get a List of Portfolios",
-            "description": "Returns a list of all available portfolios. If you do not have the right to view any portfolio, an empty list will be returned.",
+        "getAllCalendarsUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get a List of Calendars",
+            "description": "Get a list of all calendars in your Meisterplan system.",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
+            },
+            "callParams": {
+                "pathName": "/v1/calendars",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getAllCalendarsUsingGET.in.json",
+                "out": "./lib/schemas/getAllCalendarsUsingGET.out.json"
+            }
+        },
+        "getAllCalendarExceptions_xbkkF3YUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get a List of Calendar Exceptions",
+            "description": "Get a list of all exceptions to this calendar in your Meisterplan system.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/calendars/{calendarId}/exceptions",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getAllCalendarExceptions_xbkkF3YUsingGET.in.json",
+                "out": "./lib/schemas/getAllCalendarExceptions_xbkkF3YUsingGET.out.json"
+            }
+        },
+        "getAllPortfoliosUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get a List of Portfolios",
+            "description": "Returns a list of all available portfolios. If you do not have the right to view any portfolio, Returns a list of all available portfolios that you have the right to access via your API token. If you do not have the right to view any portfolio, an empty list will be returned.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/portfolios",
+                "method": "get"
             },
             "metadata": {
                 "in": "./lib/schemas/getAllPortfoliosUsingGET.in.json",
                 "out": "./lib/schemas/getAllPortfoliosUsingGET.out.json"
             }
         },
-        "getAllResourcesUsingGET": {
-            "main": "./lib/triggers/getAllResourcesUsingGET.js",
-            "title": "Get a List of Resources",
-            "description": "This endpoint is paginated. It returns a list of resources up to the specified <b>pageSize</b>",
+        "getAllObsUnits_7pgMY_IUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get all OBS Units",
+            "description": "This endpoint returns a list of all OBS units for the given OBS type.",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/obsTypes/{obsTypeId}/obsUnits",
+                "method": "get"
+            },
             "metadata": {
-                "in": "./lib/schemas/getAllResourcesUsingGET.in.json",
-                "out": "./lib/schemas/getAllResourcesUsingGET.out.json"
+                "in": "./lib/schemas/getAllObsUnits_7pgMY_IUsingGET.in.json",
+                "out": "./lib/schemas/getAllObsUnits_7pgMY_IUsingGET.out.json"
             }
         },
-        "getCalendarDeviations_wmiG2mAUsingGET": {
-            "main": "./lib/triggers/getCalendarDeviations_wmiG2mAUsingGET.js",
+        "getAllObsTypesUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get all OBS Types",
+            "description": "This endpoint is for OBS types only. To get OBS units, use <tt>/obsTypes/&lt;obs-type-id&gt;/obsUnits",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/obsTypes",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getAllObsTypesUsingGET.in.json",
+                "out": "./lib/schemas/getAllObsTypesUsingGET.out.json"
+            }
+        },
+        "getCalendarDeviations_iZk_ChUUsingGET": {
+            "main": "./lib/triggers/trigger.js",
             "title": "Get Deviations from the Calendar",
-            "description": "Reads deviations to the resource's calendar working hours.\n",
+            "description": "Reads deviations to the resource's calendar working hours.\nIf no start and finish values are passed, all deviations of the requested resource are returned.\nIf only start is passed, all deviations starting from this time are returned.\nIf only finish is passed, all deviations up to that point are returned.",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
             },
-            "metadata": {
-                "in": "./lib/schemas/getCalendarDeviations_wmiG2mAUsingGET.in.json",
-                "out": "./lib/schemas/getCalendarDeviations_wmiG2mAUsingGET.out.json"
-            }
-        },
-        "getAllRolesUsingGET": {
-            "main": "./lib/triggers/getAllRolesUsingGET.js",
-            "title": "Get a List of Roles",
-            "description": "Returns a list of all available roles. If no roles are available, an empty list is returned.",
-            "fields": {
-                "verbose": {
-                    "viewClass": "CheckBoxView",
-                    "label": "Debug this step (log more data)"
-                }
+            "callParams": {
+                "pathName": "/v1/resources/{resourceId}/calendarDeviations",
+                "method": "get"
             },
             "metadata": {
-                "in": "./lib/schemas/getAllRolesUsingGET.in.json",
-                "out": "./lib/schemas/getAllRolesUsingGET.out.json"
-            }
-        },
-        "getAllScenariosUsingGET": {
-            "main": "./lib/triggers/getAllScenariosUsingGET.js",
-            "title": "Get a List of Scenarios",
-            "description": "It returns a list of scenarios",
-            "fields": {
-                "verbose": {
-                    "viewClass": "CheckBoxView",
-                    "label": "Debug this step (log more data)"
-                }
-            },
-            "metadata": {
-                "in": "./lib/schemas/getAllScenariosUsingGET.in.json",
-                "out": "./lib/schemas/getAllScenariosUsingGET.out.json"
+                "in": "./lib/schemas/getCalendarDeviations_iZk_ChUUsingGET.in.json",
+                "out": "./lib/schemas/getCalendarDeviations_iZk_ChUUsingGET.out.json"
             }
         },
         "getAllPrograms_tw6vMqYUsingGET": {
-            "main": "./lib/triggers/getAllPrograms_tw6vMqYUsingGET.js",
+            "main": "./lib/triggers/trigger.js",
             "title": "Get a List of Programs",
             "description": "Returns a list of programs in the given scenario",
             "fields": {
@@ -126,13 +174,55 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/programs",
+                "method": "get"
+            },
             "metadata": {
                 "in": "./lib/schemas/getAllPrograms_tw6vMqYUsingGET.in.json",
                 "out": "./lib/schemas/getAllPrograms_tw6vMqYUsingGET.out.json"
             }
         },
-        "getAllProjects_AMtyOPcUsingGET": {
-            "main": "./lib/triggers/getAllProjects_AMtyOPcUsingGET.js",
+        "getAllScenariosUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get a List of Scenarios",
+            "description": "It returns a list of scenarios",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getAllScenariosUsingGET.in.json",
+                "out": "./lib/schemas/getAllScenariosUsingGET.out.json"
+            }
+        },
+        "getAllResourcesUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get a List of Resources",
+            "description": "This endpoint is paginated. It returns a list of resources up to the specified <b>pageSize</b>",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/resources",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getAllResourcesUsingGET.in.json",
+                "out": "./lib/schemas/getAllResourcesUsingGET.out.json"
+            }
+        },
+        "getAllProjects_JzzOaQEUsingGET": {
+            "main": "./lib/triggers/trigger.js",
             "title": "Get a List of Projects",
             "description": "This endpoint is paginated. It returns a list of projects up to the specified <b>pageSize</b>",
             "fields": {
@@ -141,13 +231,36 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects",
+                "method": "get"
+            },
             "metadata": {
-                "in": "./lib/schemas/getAllProjects_AMtyOPcUsingGET.in.json",
-                "out": "./lib/schemas/getAllProjects_AMtyOPcUsingGET.out.json"
+                "in": "./lib/schemas/getAllProjects_JzzOaQEUsingGET.in.json",
+                "out": "./lib/schemas/getAllProjects_JzzOaQEUsingGET.out.json"
             }
         },
-        "getAllAllocations_noZEpcgUsingGET": {
-            "main": "./lib/triggers/getAllAllocations_noZEpcgUsingGET.js",
+        "getAllActualTimeWorked_3vWRFTIUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get a List of Actual Time Worked",
+            "description": "Returns a list of actual time worked for all projects of a specific scenario. Please note that actual time worked data itself is independent from its scenario.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/actuals",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getAllActualTimeWorked_3vWRFTIUsingGET.in.json",
+                "out": "./lib/schemas/getAllActualTimeWorked_3vWRFTIUsingGET.out.json"
+            }
+        },
+        "getAllAllocations_MhivO5AUsingGET": {
+            "main": "./lib/triggers/trigger.js",
             "title": "Get a List of Allocations",
             "description": "Returns a list of allocations of a project",
             "fields": {
@@ -156,13 +269,17 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations",
+                "method": "get"
+            },
             "metadata": {
-                "in": "./lib/schemas/getAllAllocations_noZEpcgUsingGET.in.json",
-                "out": "./lib/schemas/getAllAllocations_noZEpcgUsingGET.out.json"
+                "in": "./lib/schemas/getAllAllocations_MhivO5AUsingGET.in.json",
+                "out": "./lib/schemas/getAllAllocations_MhivO5AUsingGET.out.json"
             }
         },
-        "getAllFinancials_noZEpcgUsingGET": {
-            "main": "./lib/triggers/getAllFinancials_noZEpcgUsingGET.js",
+        "getAllFinancials_MhivO5AUsingGET": {
+            "main": "./lib/triggers/trigger.js",
             "title": "Get a List of Financials",
             "description": "Returns a list of financials of a project",
             "fields": {
@@ -171,13 +288,17 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials",
+                "method": "get"
+            },
             "metadata": {
-                "in": "./lib/schemas/getAllFinancials_noZEpcgUsingGET.in.json",
-                "out": "./lib/schemas/getAllFinancials_noZEpcgUsingGET.out.json"
+                "in": "./lib/schemas/getAllFinancials_MhivO5AUsingGET.in.json",
+                "out": "./lib/schemas/getAllFinancials_MhivO5AUsingGET.out.json"
             }
         },
-        "getAllMilestones_noZEpcgUsingGET": {
-            "main": "./lib/triggers/getAllMilestones_noZEpcgUsingGET.js",
+        "getAllMilestones_MhivO5AUsingGET": {
+            "main": "./lib/triggers/trigger.js",
             "title": "Get a List of Milestones",
             "description": "Returns a list of milestones of a project",
             "fields": {
@@ -186,13 +307,36 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones",
+                "method": "get"
+            },
             "metadata": {
-                "in": "./lib/schemas/getAllMilestones_noZEpcgUsingGET.in.json",
-                "out": "./lib/schemas/getAllMilestones_noZEpcgUsingGET.out.json"
+                "in": "./lib/schemas/getAllMilestones_MhivO5AUsingGET.in.json",
+                "out": "./lib/schemas/getAllMilestones_MhivO5AUsingGET.out.json"
+            }
+        },
+        "getAllMilestoneDependencies_hzmYo7UUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get a List of Milestone Dependencies",
+            "description": "Returns a list of milestones dependencies of a scenario",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/milestoneDependencies",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getAllMilestoneDependencies_hzmYo7UUsingGET.in.json",
+                "out": "./lib/schemas/getAllMilestoneDependencies_hzmYo7UUsingGET.out.json"
             }
         },
         "getAllRoleCapacities_tw6vMqYUsingGET": {
-            "main": "./lib/triggers/getAllRoleCapacities_tw6vMqYUsingGET.js",
+            "main": "./lib/triggers/trigger.js",
             "title": "Get the capacity segments of all roles",
             "description": "Returns the capacity segments for all roles. If no capacity segments exist for a given role, its role capacities will be empty.",
             "fields": {
@@ -201,45 +345,216 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/roleCapacities",
+                "method": "get"
+            },
             "metadata": {
                 "in": "./lib/schemas/getAllRoleCapacities_tw6vMqYUsingGET.in.json",
                 "out": "./lib/schemas/getAllRoleCapacities_tw6vMqYUsingGET.out.json"
             }
+        },
+        "getAllRolesUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get a List of Roles",
+            "description": "Returns a list of all available roles. If no roles are available, an empty list is returned.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/roles",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getAllRolesUsingGET.in.json",
+                "out": "./lib/schemas/getAllRolesUsingGET.out.json"
+            }
         }
     },
     "actions": {
-        "createResourceUsingPOST": {
-            "main": "./lib/actions/createResourceUsingPOST.js",
-            "title": "Create Resources",
-            "description": "Creates a resource by the given fields and returns the newly created.",
+        "setDefaultCalendarUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Set Default Calendar",
+            "description": "Sets an existing calendar as the default calendar in your Meisterplan system.",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/calendars/defaultCalendar",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
             "metadata": {
-                "in": "./lib/schemas/createResourceUsingPOST.in.json",
-                "out": "./lib/schemas/createResourceUsingPOST.out.json"
+                "in": "./lib/schemas/setDefaultCalendarUsingPOST.in.json",
+                "out": "./lib/schemas/setDefaultCalendarUsingPOST.out.json"
             }
         },
-        "getResourceById_JzhwzjkUsingGET": {
-            "main": "./lib/actions/getResourceById_JzhwzjkUsingGET.js",
-            "title": "Get Resources by ID",
-            "description": "Returns the individual resource specified by the given ID.",
+        "createCalendarUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create Calendars",
+            "description": "Create a calendar with the given data. Will return the newly created calendar.",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/calendars",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
             "metadata": {
-                "in": "./lib/schemas/getResourceById_JzhwzjkUsingGET.in.json",
-                "out": "./lib/schemas/getResourceById_JzhwzjkUsingGET.out.json"
+                "in": "./lib/schemas/createCalendarUsingPOST.in.json",
+                "out": "./lib/schemas/createCalendarUsingPOST.out.json"
+            }
+        },
+        "updateCalendar_rWuXRCMUsingPATCH": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Calendars",
+            "description": "Perform an update on a calendar specified by the given ID.\n\n<h4>Paths</h4><p>Paths delimited by <tt>/</tt> (e.g. in calendars and OBS unit paths)\n    may define path segments which contain <tt>/</tt> by escaping with <tt>//</tt>. E.g. the path\n    <tT>Europe/Berlin//Amsterdam</tt> will be interpreted as <tt>['Europe', 'Berlin/Amsterdam']</tt>.\n    An uneven amount of slashes will be interpreted as the following segment starting with one or more slashes.</p>",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/calendars/{calendarId}",
+                "method": "patch",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateCalendar_rWuXRCMUsingPATCH.in.json",
+                "out": "./lib/schemas/updateCalendar_rWuXRCMUsingPATCH.out.json"
+            }
+        },
+        "createCalendarExceptions_rWuXRCMUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Calendar Exceptions",
+            "description": "Use this request to replace all calendar exceptions for a certain time period.\nThis time period can be defined using the root start and finish attributes of the request.\nSpecify the new list of calendar exceptions with the <tt>exceptions</tt> property.\nNote that all exceptions in the specified period will be overwritten by the exceptions listed in the <tt>exceptions</tt> property.\n<ul><li> If null is used for the start period and end period, all exceptions of the calendar are overwritten</li>\n<li> If only the start date of the period is defined, all exceptions starting from this time will be overwritten</li>\n<li> If only the end date of the period is defined, all exceptions up to that point will be overwritten</li>\n<li> If an exception is removed and a parent calendar has an exception at that date, this calendar inherits the exception from the parent calendar.\n</ul>\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/calendars/{calendarId}/exceptions",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createCalendarExceptions_rWuXRCMUsingPOST.in.json",
+                "out": "./lib/schemas/createCalendarExceptions_rWuXRCMUsingPOST.out.json"
+            }
+        },
+        "deleteObsType_7pgMY_IUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete an OBS Type by ID",
+            "description": "Delete the OBS type specified by the given ID. If the OBS type with the given ID does not exist, the request will fail.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/obsTypes/{obsTypeId}",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteObsType_7pgMY_IUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteObsType_7pgMY_IUsingDELETE.out.json"
+            }
+        },
+        "getObsUnit_i05leloUsingGET": {
+            "main": "./lib/actions/action.js",
+            "title": "Get an OBS Unit",
+            "description": "This endpoint returns a single OBS unit.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/obsTypes/{obsTypeId}/obsUnits/{obsUnitId}",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getObsUnit_i05leloUsingGET.in.json",
+                "out": "./lib/schemas/getObsUnit_i05leloUsingGET.out.json"
+            }
+        },
+        "createObsUnit_bVyytFEUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create OBS Unit",
+            "description": "Creates an OBS unit with the given data. Will return the newly created OBS unit.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/obsTypes/{obsTypeId}/obsUnits",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createObsUnit_bVyytFEUsingPOST.in.json",
+                "out": "./lib/schemas/createObsUnit_bVyytFEUsingPOST.out.json"
+            }
+        },
+        "updateObsUnit_BWy5g9QUsingPATCH": {
+            "main": "./lib/actions/action.js",
+            "title": "Update an OBS Unit",
+            "description": "Updates a single OBS unit's name or moves it to a different parent.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/obsTypes/{obsTypeId}/obsUnits/{obsUnitId}",
+                "method": "patch",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateObsUnit_BWy5g9QUsingPATCH.in.json",
+                "out": "./lib/schemas/updateObsUnit_BWy5g9QUsingPATCH.out.json"
+            }
+        },
+        "createObsTypeUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create OBS Type",
+            "description": "Creates an OBS type with the given data. Will return the newly created OBS type.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/obsTypes",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createObsTypeUsingPOST.in.json",
+                "out": "./lib/schemas/createObsTypeUsingPOST.out.json"
             }
         },
         "deleteResource_JzhwzjkUsingDELETE": {
-            "main": "./lib/actions/deleteResource_JzhwzjkUsingDELETE.js",
+            "main": "./lib/actions/action.js",
             "title": "Delete Resources",
             "description": "Delete the resource specified by the given ID. If the resource with the given ID does not exist, the request fails.",
             "fields": {
@@ -248,50 +563,87 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/resources/{resourceId}",
+                "method": "delete"
+            },
             "metadata": {
                 "in": "./lib/schemas/deleteResource_JzhwzjkUsingDELETE.in.json",
                 "out": "./lib/schemas/deleteResource_JzhwzjkUsingDELETE.out.json"
             }
         },
-        "updateResource_rVpP_o0UsingPATCH": {
-            "main": "./lib/actions/updateResource_rVpP_o0UsingPATCH.js",
-            "title": "Update Resources",
-            "description": "Perform an update on a resource specified by the given ID.",
+        "deleteObsUnit_i05leloUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete an OBS Unit by ID",
+            "description": "Deletes the OBS unit specified by the given ID. If the OBS unit with the given ID does not exist, the request will fail.",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/obsTypes/{obsTypeId}/obsUnits/{obsUnitId}",
+                "method": "delete"
+            },
             "metadata": {
-                "in": "./lib/schemas/updateResource_rVpP_o0UsingPATCH.in.json",
-                "out": "./lib/schemas/updateResource_rVpP_o0UsingPATCH.out.json"
+                "in": "./lib/schemas/deleteObsUnit_i05leloUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteObsUnit_i05leloUsingDELETE.out.json"
             }
         },
-        "updateCalendarDeviations_LsMQJi4UsingPOST": {
-            "main": "./lib/actions/updateCalendarDeviations_LsMQJi4UsingPOST.js",
-            "title": "Update Deviations from the Calendar",
-            "description": "You can use this request to replace the calendar deviations of a resource for a certain period of time.",
+        "updateResource_Sg6N_wkUsingPATCH": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Resources",
+            "description": "Perform an update on a resource specified by the given ID.\n\n<h4>Paths</h4><p>Paths delimited by <tt>/</tt> (e.g. in calendars and OBS unit paths)\n    may define path segments which contain <tt>/</tt> by escaping with <tt>//</tt>. E.g. the path\n    <tT>Europe/Berlin//Amsterdam</tt> will be interpreted as <tt>['Europe', 'Berlin/Amsterdam']</tt>.\n    An uneven amount of slashes will be interpreted as the following segment starting with one or more slashes.</p>",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/resources/{resourceId}",
+                "method": "patch",
+                "requestContentType": "application/json"
+            },
             "metadata": {
-                "in": "./lib/schemas/updateCalendarDeviations_LsMQJi4UsingPOST.in.json",
-                "out": "./lib/schemas/updateCalendarDeviations_LsMQJi4UsingPOST.out.json"
+                "in": "./lib/schemas/updateResource_Sg6N_wkUsingPATCH.in.json",
+                "out": "./lib/schemas/updateResource_Sg6N_wkUsingPATCH.out.json"
+            }
+        },
+        "getResourceById_JzhwzjkUsingGET": {
+            "main": "./lib/actions/action.js",
+            "title": "Get Resources by ID",
+            "description": "Returns the individual resource specified by the given ID.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/resources/{resourceId}",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getResourceById_JzhwzjkUsingGET.in.json",
+                "out": "./lib/schemas/getResourceById_JzhwzjkUsingGET.out.json"
             }
         },
         "createRoleUsingPOST": {
-            "main": "./lib/actions/createRoleUsingPOST.js",
+            "main": "./lib/actions/action.js",
             "title": "Create Roles",
-            "description": "Returns the created role on success.",
+            "description": "Returns the created role on success.<h4>Paths</h4><p>Paths delimited by <tt>/</tt> (e.g. in calendars and OBS unit paths)\n    may define path segments which contain <tt>/</tt> by escaping with <tt>//</tt>. E.g. the path\n    <tT>Europe/Berlin//Amsterdam</tt> will be interpreted as <tt>['Europe', 'Berlin/Amsterdam']</tt>.\n    An uneven amount of slashes will be interpreted as the following segment starting with one or more slashes.</p>",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
+            },
+            "callParams": {
+                "pathName": "/v1/roles",
+                "method": "post",
+                "requestContentType": "application/json"
             },
             "metadata": {
                 "in": "./lib/schemas/createRoleUsingPOST.in.json",
@@ -299,7 +651,7 @@
             }
         },
         "getRoleById_7FSeu28UsingGET": {
-            "main": "./lib/actions/getRoleById_7FSeu28UsingGET.js",
+            "main": "./lib/actions/action.js",
             "title": "Get Roles by ID",
             "description": "Returns the individual role specified by the given ID.",
             "fields": {
@@ -308,28 +660,96 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/roles/{roleId}",
+                "method": "get"
+            },
             "metadata": {
                 "in": "./lib/schemas/getRoleById_7FSeu28UsingGET.in.json",
                 "out": "./lib/schemas/getRoleById_7FSeu28UsingGET.out.json"
             }
         },
-        "updateRole_jrAY1zcUsingPATCH": {
-            "main": "./lib/actions/updateRole_jrAY1zcUsingPATCH.js",
-            "title": "Update Roles",
-            "description": "Perform an update on a role specified by the given ID.",
+        "deleteRole_7FSeu28UsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Roles",
+            "description": "Delete the role specified by the given ID. If the role with the given ID does not exist, the request will fail.",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/roles/{roleId}",
+                "method": "delete"
+            },
             "metadata": {
-                "in": "./lib/schemas/updateRole_jrAY1zcUsingPATCH.in.json",
-                "out": "./lib/schemas/updateRole_jrAY1zcUsingPATCH.out.json"
+                "in": "./lib/schemas/deleteRole_7FSeu28UsingDELETE.in.json",
+                "out": "./lib/schemas/deleteRole_7FSeu28UsingDELETE.out.json"
+            }
+        },
+        "updateCalendarDeviations_Sg6N_wkUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Deviations from the Calendar",
+            "description": "Use this request to replace all calendar deviations of a resource for a certain time period.\nThis time period can be defined using the root start and finish attributes of the request.\nSpecify the new list of calendar deviations with the <tt>deviations</tt> property.\nNote that all deviations in the specified period will be overwritten by the deviations listed in the <tt>deviations</tt> property.\n<ul><li> If null is used for the start period and end period, all calendar deviations of the resource are overwritten</li>\n<li> If only the start date of the period is defined, all deviations starting from this time will be overwritten</li>\n<li> If only the end date of the period is defined, all deviations up to that point will be overwritten</li>\n<li> If null is used for the start and/or end date of a calendar deviation, the deviation is assumed to last from or until the root start or finish date specified above.\n</ul>All deviations are flattened into a sequential structure. Cases of overlapping deviations will be resolved by giving precedence to deviations occurring later in the array.\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/resources/{resourceId}/calendarDeviations",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateCalendarDeviations_Sg6N_wkUsingPOST.in.json",
+                "out": "./lib/schemas/updateCalendarDeviations_Sg6N_wkUsingPOST.out.json"
+            }
+        },
+        "updateRole_4_jUfJkUsingPATCH": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Roles",
+            "description": "Perform an update on a role specified by the given ID. To do a partial update, only the updated fields need to be sent. To delete a field value, the field must be sent with an explicit null value. Fields with a default value will be reset to their default when set to null.<h4>Paths</h4><p>Paths delimited by <tt>/</tt> (e.g. in calendars and OBS unit paths)\n    may define path segments which contain <tt>/</tt> by escaping with <tt>//</tt>. E.g. the path\n    <tT>Europe/Berlin//Amsterdam</tt> will be interpreted as <tt>['Europe', 'Berlin/Amsterdam']</tt>.\n    An uneven amount of slashes will be interpreted as the following segment starting with one or more slashes.</p>",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/roles/{roleId}",
+                "method": "patch",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateRole_4_jUfJkUsingPATCH.in.json",
+                "out": "./lib/schemas/updateRole_4_jUfJkUsingPATCH.out.json"
+            }
+        },
+        "updateObsType_bVyytFEUsingPATCH": {
+            "main": "./lib/actions/action.js",
+            "title": "Update OBS Types",
+            "description": "Performs an update on an OBS type specified by the given ID.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/obsTypes/{obsTypeId}",
+                "method": "patch",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateObsType_bVyytFEUsingPATCH.in.json",
+                "out": "./lib/schemas/updateObsType_bVyytFEUsingPATCH.out.json"
             }
         },
         "getScenarioById_tw6vMqYUsingGET": {
-            "main": "./lib/actions/getScenarioById_tw6vMqYUsingGET.js",
+            "main": "./lib/actions/action.js",
             "title": "Get Scenarios by ID",
             "description": "Returns the individual scenario specified by the given ID. <br> <b>Hint</b>:\nYou can use \"planOfRecord\" as the ID for the plan of record scenario.",
             "fields": {
@@ -338,58 +758,17 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}",
+                "method": "get"
+            },
             "metadata": {
                 "in": "./lib/schemas/getScenarioById_tw6vMqYUsingGET.in.json",
                 "out": "./lib/schemas/getScenarioById_tw6vMqYUsingGET.out.json"
             }
         },
-        "updatePriorities_yLc3jRoUsingPOST": {
-            "main": "./lib/actions/updatePriorities_yLc3jRoUsingPOST.js",
-            "title": "Update Priorities",
-            "description": "This endpoint updates the priorities of projects and programs. ",
-            "fields": {
-                "verbose": {
-                    "viewClass": "CheckBoxView",
-                    "label": "Debug this step (log more data)"
-                }
-            },
-            "metadata": {
-                "in": "./lib/schemas/updatePriorities_yLc3jRoUsingPOST.in.json",
-                "out": "./lib/schemas/updatePriorities_yLc3jRoUsingPOST.out.json"
-            }
-        },
-        "createProgram_CZZWDWYUsingPOST": {
-            "main": "./lib/actions/createProgram_CZZWDWYUsingPOST.js",
-            "title": "Create Programs",
-            "description": "Creates a program with the given fields and returns the newly created program.",
-            "fields": {
-                "verbose": {
-                    "viewClass": "CheckBoxView",
-                    "label": "Debug this step (log more data)"
-                }
-            },
-            "metadata": {
-                "in": "./lib/schemas/createProgram_CZZWDWYUsingPOST.in.json",
-                "out": "./lib/schemas/createProgram_CZZWDWYUsingPOST.out.json"
-            }
-        },
-        "deleteProgram_lRwunWUUsingDELETE": {
-            "main": "./lib/actions/deleteProgram_lRwunWUUsingDELETE.js",
-            "title": "Delete Programs",
-            "description": "Deletes a program specified by the given ID.",
-            "fields": {
-                "verbose": {
-                    "viewClass": "CheckBoxView",
-                    "label": "Debug this step (log more data)"
-                }
-            },
-            "metadata": {
-                "in": "./lib/schemas/deleteProgram_lRwunWUUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteProgram_lRwunWUUsingDELETE.out.json"
-            }
-        },
-        "updateProgram_JhdwEm0UsingPATCH": {
-            "main": "./lib/actions/updateProgram_JhdwEm0UsingPATCH.js",
+        "updateProgram_ajwqVRYUsingPATCH": {
+            "main": "./lib/actions/action.js",
             "title": "Update Programs",
             "description": "Perform an update on a program specified by the given ID.",
             "fields": {
@@ -398,28 +777,117 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/programs/{programId}",
+                "method": "patch",
+                "requestContentType": "application/json"
+            },
             "metadata": {
-                "in": "./lib/schemas/updateProgram_JhdwEm0UsingPATCH.in.json",
-                "out": "./lib/schemas/updateProgram_JhdwEm0UsingPATCH.out.json"
+                "in": "./lib/schemas/updateProgram_ajwqVRYUsingPATCH.in.json",
+                "out": "./lib/schemas/updateProgram_ajwqVRYUsingPATCH.out.json"
             }
         },
-        "createProject_QWGM0WIUsingPOST": {
-            "main": "./lib/actions/createProject_QWGM0WIUsingPOST.js",
-            "title": "Create Projects",
-            "description": "Creates a project with the given fields and returns the newly created project.",
+        "createMilestoneDependency_Tu7aLsoUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create a Milestone Dependency",
+            "description": "Returns the id of the newly created milestone dependency",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/milestoneDependencies",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
             "metadata": {
-                "in": "./lib/schemas/createProject_QWGM0WIUsingPOST.in.json",
-                "out": "./lib/schemas/createProject_QWGM0WIUsingPOST.out.json"
+                "in": "./lib/schemas/createMilestoneDependency_Tu7aLsoUsingPOST.in.json",
+                "out": "./lib/schemas/createMilestoneDependency_Tu7aLsoUsingPOST.out.json"
             }
         },
-        "getProjectById_noZEpcgUsingGET": {
-            "main": "./lib/actions/getProjectById_noZEpcgUsingGET.js",
+        "updatePriorities_Tu7aLsoUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Priorities",
+            "description": "This endpoint updates the priorities of projects and programs. Please consider that updating the priority of a project that is within a program results in unassigning the project from its program.To update the priorities of your projects and programs, list their IDs in the desired order of priority for each rank category. If there are projects or programs in Meisterplan for a particular rank category that are not mentioned in your list, you can use the <tt>position</tt> parameter to define whether your listed projects and programs will be ranked above or below those in Meisterplan.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/priorities",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/updatePriorities_Tu7aLsoUsingPOST.in.json",
+                "out": "./lib/schemas/updatePriorities_Tu7aLsoUsingPOST.out.json"
+            }
+        },
+        "createProgram_Tu7aLsoUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create Programs",
+            "description": "Creates a program with the given fields and returns the newly created program.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/programs",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createProgram_Tu7aLsoUsingPOST.in.json",
+                "out": "./lib/schemas/createProgram_Tu7aLsoUsingPOST.out.json"
+            }
+        },
+        "createProject_Tu7aLsoUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create Projects",
+            "description": "Creates a project with the given fields and returns the newly created project.\n<h3>Notes:</h3>\n<h4>Paths</h4><p>Paths delimited by <tt>/</tt> (e.g. in calendars and OBS unit paths)\n    may define path segments which contain <tt>/</tt> by escaping with <tt>//</tt>. E.g. the path\n    <tT>Europe/Berlin//Amsterdam</tt> will be interpreted as <tt>['Europe', 'Berlin/Amsterdam']</tt>.\n    An uneven amount of slashes will be interpreted as the following segment starting with one or more slashes.</p>\n<h4>Custom Fields</h4><p>Custom fields are defined <b>as properties of</b> the <tt>customFields</tt> object.\n    The property name of a custom field corresponds to its column name. A custom field is an object containing a value.\nThe value can be of type string, number or boolean depending on the type of custom field. You can view all available custom fields with their respective\ncolumn names in your Meisterplan system.</p>\n<p>\nFor custom fields of type string, text, lookup or url, the value is of JSON type string.<br>\nFor custom fields of type integer, decimal or currency, the value is of JSON type float.<br>\nFor custom fields of type boolean, the value is of JSON type boolean.<br>\n</p>\n<p>\nExample:\n</p>\n<pre>\n\"customFields\":{\n  \"cust_stage_gate\":{\n    \"value\": \"New\"\n  }\n  ...\n}\n</pre>\n\n\n<h4>Priorities</h4>\n<p>Projects may be assigned to a program, or they can be given a rank category. It is not possible to assign a\nproject to a rank category and a program at the same time. Assigning an existing project to a rank category will\nunassign it from any program it may be assigned to. Assigning an existing project to a program may mean that its rank\n category changes, if the target program is in a different rank category.\n</p>\n<p>\nIt is currently not possible to prioritize projects within a program.\n</p>\n\n    ",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createProject_Tu7aLsoUsingPOST.in.json",
+                "out": "./lib/schemas/createProject_Tu7aLsoUsingPOST.out.json"
+            }
+        },
+        "deleteCalendarById_x0so0eQUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Calendars",
+            "description": "Deletes a calendar in your Meisterplan system. Please note that the default calendar or a parent of the default calendar cannot be deleted.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/calendars/{calendarId}",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteCalendarById_x0so0eQUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteCalendarById_x0so0eQUsingDELETE.out.json"
+            }
+        },
+        "getProjectById_MhivO5AUsingGET": {
+            "main": "./lib/actions/action.js",
             "title": "Get Projects by ID",
             "description": "Returns the individual project specified by the given ID.",
             "fields": {
@@ -428,13 +896,37 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}",
+                "method": "get"
+            },
             "metadata": {
-                "in": "./lib/schemas/getProjectById_noZEpcgUsingGET.in.json",
-                "out": "./lib/schemas/getProjectById_noZEpcgUsingGET.out.json"
+                "in": "./lib/schemas/getProjectById_MhivO5AUsingGET.in.json",
+                "out": "./lib/schemas/getProjectById_MhivO5AUsingGET.out.json"
             }
         },
-        "deleteProject_noZEpcgUsingDELETE": {
-            "main": "./lib/actions/deleteProject_noZEpcgUsingDELETE.js",
+        "updateProject_K0e4OZEUsingPATCH": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Projects",
+            "description": "Perform an update on a project specified by the given ID.\n\n<h4>Paths</h4><p>Paths delimited by <tt>/</tt> (e.g. in calendars and OBS unit paths)\n    may define path segments which contain <tt>/</tt> by escaping with <tt>//</tt>. E.g. the path\n    <tT>Europe/Berlin//Amsterdam</tt> will be interpreted as <tt>['Europe', 'Berlin/Amsterdam']</tt>.\n    An uneven amount of slashes will be interpreted as the following segment starting with one or more slashes.</p>\n<h4>Custom Fields</h4><p>Custom fields are defined <b>as properties of</b> the <tt>customFields</tt> object.\n    The property name of a custom field corresponds to its column name. A custom field is an object containing a value.\nThe value can be of type string, number or boolean depending on the type of custom field. You can view all available custom fields with their respective\ncolumn names in your Meisterplan system.</p>\n<p>\nFor custom fields of type string, text, lookup or url, the value is of JSON type string.<br>\nFor custom fields of type integer, decimal or currency, the value is of JSON type float.<br>\nFor custom fields of type boolean, the value is of JSON type boolean.<br>\n</p>\n<p>\nExample:\n</p>\n<pre>\n\"customFields\":{\n  \"cust_stage_gate\":{\n    \"value\": \"New\"\n  }\n  ...\n}\n</pre>\n\n<br><h4>A note on Project Finish</h4><p>\n    Please consider that an update of the finish date of a project deletes all milestones and allocation segments that exist after the new project finish date.\n</p>\n",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}",
+                "method": "patch",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateProject_K0e4OZEUsingPATCH.in.json",
+                "out": "./lib/schemas/updateProject_K0e4OZEUsingPATCH.out.json"
+            }
+        },
+        "deleteProject_MhivO5AUsingDELETE": {
+            "main": "./lib/actions/action.js",
             "title": "Delete Projects",
             "description": "Deletes a project in a given scenario.",
             "fields": {
@@ -443,43 +935,96 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}",
+                "method": "delete"
+            },
             "metadata": {
-                "in": "./lib/schemas/deleteProject_noZEpcgUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteProject_noZEpcgUsingDELETE.out.json"
+                "in": "./lib/schemas/deleteProject_MhivO5AUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteProject_MhivO5AUsingDELETE.out.json"
             }
         },
-        "updateProject_NLza_rIUsingPATCH": {
-            "main": "./lib/actions/updateProject_NLza_rIUsingPATCH.js",
-            "title": "Update Projects",
-            "description": "Perform an update on a project specified by the given ID.",
+        "createOrUpdateActualTimeWorked_K0e4OZEUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create or Update Actual Time Worked",
+            "description": "This endpoint lets you create new Actual Time Worked and update the existing Actual Time Worked of a project by an entity (resource or role). We will not update Actual Time Worked for booking dates that are not specified in the request for a given project and entity. With the <tt>mode</tt> property you can control if an existing Actual Time Worked value is replaced by the new value or if its value is added to the booking in the request.Please note that actual time worked data itself is independent from its scenario. It will be the same across all scenarios for a given project.",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/actuals",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
             "metadata": {
-                "in": "./lib/schemas/updateProject_NLza_rIUsingPATCH.in.json",
-                "out": "./lib/schemas/updateProject_NLza_rIUsingPATCH.out.json"
+                "in": "./lib/schemas/createOrUpdateActualTimeWorked_K0e4OZEUsingPOST.in.json",
+                "out": "./lib/schemas/createOrUpdateActualTimeWorked_K0e4OZEUsingPOST.out.json"
             }
         },
-        "createOrUpdateAllocation_C9UxUWoUsingPOST": {
-            "main": "./lib/actions/createOrUpdateAllocation_C9UxUWoUsingPOST.js",
+        "createOrUpdateAllocation_K0e4OZEUsingPOST": {
+            "main": "./lib/actions/action.js",
             "title": "Create or Update Allocations",
-            "description": "Creates or updates allocations for a given project.",
+            "description": "This endpoint lets you create new allocations and update existing allocations of a project. Changes will only be made for the specified date ranges as well as the specified resources and roles. ",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
             "metadata": {
-                "in": "./lib/schemas/createOrUpdateAllocation_C9UxUWoUsingPOST.in.json",
-                "out": "./lib/schemas/createOrUpdateAllocation_C9UxUWoUsingPOST.out.json"
+                "in": "./lib/schemas/createOrUpdateAllocation_K0e4OZEUsingPOST.in.json",
+                "out": "./lib/schemas/createOrUpdateAllocation_K0e4OZEUsingPOST.out.json"
             }
         },
-        "getAllocationId_k2iSeEMUsingGET": {
-            "main": "./lib/actions/getAllocationId_k2iSeEMUsingGET.js",
+        "replaceAllocation_K0e4OZEUsingPUT": {
+            "main": "./lib/actions/action.js",
+            "title": "Replace Allocations",
+            "description": "This endpoint lets you replace all allocations of a project. The result will be the same as if all existing allocations are deleted and the passed allocations are created again.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations",
+                "method": "put",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/replaceAllocation_K0e4OZEUsingPUT.in.json",
+                "out": "./lib/schemas/replaceAllocation_K0e4OZEUsingPUT.out.json"
+            }
+        },
+        "deleteAllActualTimeWorked_MhivO5AUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Actual Time Worked",
+            "description": "Deletes all actual time worked of a given project.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/actuals",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteAllActualTimeWorked_MhivO5AUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteAllActualTimeWorked_MhivO5AUsingDELETE.out.json"
+            }
+        },
+        "getAllocationId_bc5zYTgUsingGET": {
+            "main": "./lib/actions/action.js",
             "title": "Get Allocations by ID",
             "description": "Returns the individual allocation specified by the given ID.",
             "fields": {
@@ -488,58 +1033,17 @@
                     "label": "Debug this step (log more data)"
                 }
             },
-            "metadata": {
-                "in": "./lib/schemas/getAllocationId_k2iSeEMUsingGET.in.json",
-                "out": "./lib/schemas/getAllocationId_k2iSeEMUsingGET.out.json"
-            }
-        },
-        "deleteAllocation_k2iSeEMUsingDELETE": {
-            "main": "./lib/actions/deleteAllocation_k2iSeEMUsingDELETE.js",
-            "title": "Delete Allocations",
-            "description": "Deletes an allocation in a given project of a scenario.",
-            "fields": {
-                "verbose": {
-                    "viewClass": "CheckBoxView",
-                    "label": "Debug this step (log more data)"
-                }
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations/{allocationId}",
+                "method": "get"
             },
             "metadata": {
-                "in": "./lib/schemas/deleteAllocation_k2iSeEMUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteAllocation_k2iSeEMUsingDELETE.out.json"
+                "in": "./lib/schemas/getAllocationId_bc5zYTgUsingGET.in.json",
+                "out": "./lib/schemas/getAllocationId_bc5zYTgUsingGET.out.json"
             }
         },
-        "updateAllocation_jBAbuKoUsingPATCH": {
-            "main": "./lib/actions/updateAllocation_jBAbuKoUsingPATCH.js",
-            "title": "Update Allocations",
-            "description": "Perform an update on an allocation specified by the given ID.",
-            "fields": {
-                "verbose": {
-                    "viewClass": "CheckBoxView",
-                    "label": "Debug this step (log more data)"
-                }
-            },
-            "metadata": {
-                "in": "./lib/schemas/updateAllocation_jBAbuKoUsingPATCH.in.json",
-                "out": "./lib/schemas/updateAllocation_jBAbuKoUsingPATCH.out.json"
-            }
-        },
-        "createFinancials_csEgcy0UsingPOST": {
-            "main": "./lib/actions/createFinancials_csEgcy0UsingPOST.js",
-            "title": "Create Financials",
-            "description": "Returns the newly created financial event.",
-            "fields": {
-                "verbose": {
-                    "viewClass": "CheckBoxView",
-                    "label": "Debug this step (log more data)"
-                }
-            },
-            "metadata": {
-                "in": "./lib/schemas/createFinancials_csEgcy0UsingPOST.in.json",
-                "out": "./lib/schemas/createFinancials_csEgcy0UsingPOST.out.json"
-            }
-        },
-        "getFinancialsById_ctAE1qgUsingGET": {
-            "main": "./lib/actions/getFinancialsById_ctAE1qgUsingGET.js",
+        "getFinancialsById_vi4Ugd4UsingGET": {
+            "main": "./lib/actions/action.js",
             "title": "Get Financials by ID",
             "description": "Returns the individual financial event specified by the given ID.",
             "fields": {
@@ -548,43 +1052,36 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials/{financialsId}",
+                "method": "get"
+            },
             "metadata": {
-                "in": "./lib/schemas/getFinancialsById_ctAE1qgUsingGET.in.json",
-                "out": "./lib/schemas/getFinancialsById_ctAE1qgUsingGET.out.json"
+                "in": "./lib/schemas/getFinancialsById_vi4Ugd4UsingGET.in.json",
+                "out": "./lib/schemas/getFinancialsById_vi4Ugd4UsingGET.out.json"
             }
         },
-        "deleteFinancials_ctAE1qgUsingDELETE": {
-            "main": "./lib/actions/deleteFinancials_ctAE1qgUsingDELETE.js",
-            "title": "Delete Financials",
-            "description": "Deletes a financial event in a given project of a scenario.",
+        "deleteAllocation_bc5zYTgUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Allocations",
+            "description": "Deletes an allocation in a given project of a scenario.",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
             },
-            "metadata": {
-                "in": "./lib/schemas/deleteFinancials_ctAE1qgUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteFinancials_ctAE1qgUsingDELETE.out.json"
-            }
-        },
-        "updateFinancials_gnc_0sMUsingPATCH": {
-            "main": "./lib/actions/updateFinancials_gnc_0sMUsingPATCH.js",
-            "title": "Update Financials",
-            "description": "Updates a financial event by ID in a given project of a scenario.",
-            "fields": {
-                "verbose": {
-                    "viewClass": "CheckBoxView",
-                    "label": "Debug this step (log more data)"
-                }
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations/{allocationId}",
+                "method": "delete"
             },
             "metadata": {
-                "in": "./lib/schemas/updateFinancials_gnc_0sMUsingPATCH.in.json",
-                "out": "./lib/schemas/updateFinancials_gnc_0sMUsingPATCH.out.json"
+                "in": "./lib/schemas/deleteAllocation_bc5zYTgUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteAllocation_bc5zYTgUsingDELETE.out.json"
             }
         },
-        "createMilestone_sejz1OsUsingPOST": {
-            "main": "./lib/actions/createMilestone_sejz1OsUsingPOST.js",
+        "createMilestone_K0e4OZEUsingPOST": {
+            "main": "./lib/actions/action.js",
             "title": "Create Milestones",
             "description": "Returns the newly created milestone",
             "fields": {
@@ -593,13 +1090,58 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
             "metadata": {
-                "in": "./lib/schemas/createMilestone_sejz1OsUsingPOST.in.json",
-                "out": "./lib/schemas/createMilestone_sejz1OsUsingPOST.out.json"
+                "in": "./lib/schemas/createMilestone_K0e4OZEUsingPOST.in.json",
+                "out": "./lib/schemas/createMilestone_K0e4OZEUsingPOST.out.json"
             }
         },
-        "getMilestoneById_pn9ubkAUsingGET": {
-            "main": "./lib/actions/getMilestoneById_pn9ubkAUsingGET.js",
+        "createFinancials_K0e4OZEUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create Financials",
+            "description": "Returns the newly created financial event.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createFinancials_K0e4OZEUsingPOST.in.json",
+                "out": "./lib/schemas/createFinancials_K0e4OZEUsingPOST.out.json"
+            }
+        },
+        "updateFinancials_KXr6_AUUsingPATCH": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Financials",
+            "description": "Updates a financial event by ID in a given project of a scenario.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials/{financialsId}",
+                "method": "patch",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateFinancials_KXr6_AUUsingPATCH.in.json",
+                "out": "./lib/schemas/updateFinancials_KXr6_AUUsingPATCH.out.json"
+            }
+        },
+        "getMilestoneById_WmP8qGUUsingGET": {
+            "main": "./lib/actions/action.js",
             "title": "Get Milestones by ID",
             "description": "Returns the individual milestone specified by the given ID.",
             "fields": {
@@ -608,28 +1150,36 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones/{milestoneId}",
+                "method": "get"
+            },
             "metadata": {
-                "in": "./lib/schemas/getMilestoneById_pn9ubkAUsingGET.in.json",
-                "out": "./lib/schemas/getMilestoneById_pn9ubkAUsingGET.out.json"
+                "in": "./lib/schemas/getMilestoneById_WmP8qGUUsingGET.in.json",
+                "out": "./lib/schemas/getMilestoneById_WmP8qGUUsingGET.out.json"
             }
         },
-        "deleteMilestone_pn9ubkAUsingDELETE": {
-            "main": "./lib/actions/deleteMilestone_pn9ubkAUsingDELETE.js",
-            "title": "Delete Milestones",
-            "description": "Deletes a milestone in a given project of a scenario.",
+        "deleteFinancials_vi4Ugd4UsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Financials",
+            "description": "Deletes a financial event in a given project of a scenario.",
             "fields": {
                 "verbose": {
                     "viewClass": "CheckBoxView",
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials/{financialsId}",
+                "method": "delete"
+            },
             "metadata": {
-                "in": "./lib/schemas/deleteMilestone_pn9ubkAUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteMilestone_pn9ubkAUsingDELETE.out.json"
+                "in": "./lib/schemas/deleteFinancials_vi4Ugd4UsingDELETE.in.json",
+                "out": "./lib/schemas/deleteFinancials_vi4Ugd4UsingDELETE.out.json"
             }
         },
-        "updateMilestone_P8HYQGIUsingPATCH": {
-            "main": "./lib/actions/updateMilestone_P8HYQGIUsingPATCH.js",
+        "updateMilestone_YnoWQjUUsingPATCH": {
+            "main": "./lib/actions/action.js",
             "title": "Update Milestones",
             "description": "Perform an update on a milestone specified by the given ID.",
             "fields": {
@@ -638,13 +1188,153 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones/{milestoneId}",
+                "method": "patch",
+                "requestContentType": "application/json"
+            },
             "metadata": {
-                "in": "./lib/schemas/updateMilestone_P8HYQGIUsingPATCH.in.json",
-                "out": "./lib/schemas/updateMilestone_P8HYQGIUsingPATCH.out.json"
+                "in": "./lib/schemas/updateMilestone_YnoWQjUUsingPATCH.in.json",
+                "out": "./lib/schemas/updateMilestone_YnoWQjUUsingPATCH.out.json"
             }
         },
-        "getRoleCapacities_m8NDl80UsingGET": {
-            "main": "./lib/actions/getRoleCapacities_m8NDl80UsingGET.js",
+        "createResourceUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create Resources",
+            "description": "Creates a resource by the given fields and returns the newly created.\n\n<h4>Paths</h4><p>Paths delimited by <tt>/</tt> (e.g. in calendars and OBS unit paths)\n    may define path segments which contain <tt>/</tt> by escaping with <tt>//</tt>. E.g. the path\n    <tT>Europe/Berlin//Amsterdam</tt> will be interpreted as <tt>['Europe', 'Berlin/Amsterdam']</tt>.\n    An uneven amount of slashes will be interpreted as the following segment starting with one or more slashes.</p>",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/resources",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createResourceUsingPOST.in.json",
+                "out": "./lib/schemas/createResourceUsingPOST.out.json"
+            }
+        },
+        "deleteProgram_E6pcOgYUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Programs",
+            "description": "Deletes a program specified by the given ID.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/programs/{programId}",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteProgram_E6pcOgYUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteProgram_E6pcOgYUsingDELETE.out.json"
+            }
+        },
+        "updateAllocation_3rzM9CAUsingPATCH": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Allocations",
+            "description": "This endpoint lets you update existing allocations of a project. Changes will only be made for the specified date ranges as well as the specified resources and roles.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations/{allocationId}",
+                "method": "patch",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateAllocation_3rzM9CAUsingPATCH.in.json",
+                "out": "./lib/schemas/updateAllocation_3rzM9CAUsingPATCH.out.json"
+            }
+        },
+        "deleteMilestone_WmP8qGUUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Milestones",
+            "description": "Deletes a milestone in a given project of a scenario.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones/{milestoneId}",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteMilestone_WmP8qGUUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteMilestone_WmP8qGUUsingDELETE.out.json"
+            }
+        },
+        "getCalendarById_x0so0eQUsingGET": {
+            "main": "./lib/actions/action.js",
+            "title": "Get Calendars by ID",
+            "description": "Get one calendar in your Meisterplan system. Use the special ID <tt>defaultCalendar</tt> to get the default calendar.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/calendars/{calendarId}",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getCalendarById_x0so0eQUsingGET.in.json",
+                "out": "./lib/schemas/getCalendarById_x0so0eQUsingGET.out.json"
+            }
+        },
+        "getObsTypeById_7pgMY_IUsingGET": {
+            "main": "./lib/actions/action.js",
+            "title": "Get an OBS Type by ID",
+            "description": "This endpoint is for OBS types only. To get OBS units, use <tt>/obsTypes/&lt;obs-type-id&gt;/obsUnits",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/obsTypes/{obsTypeId}",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getObsTypeById_7pgMY_IUsingGET.in.json",
+                "out": "./lib/schemas/getObsTypeById_7pgMY_IUsingGET.out.json"
+            }
+        },
+        "deleteMilestoneDependency_Tu7aLsoUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Milestone Dependencies",
+            "description": "Deletes a milestone dependency in a given scenario.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/milestoneDependencies/{milestoneDependencyId}",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteMilestoneDependency_Tu7aLsoUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteMilestoneDependency_Tu7aLsoUsingDELETE.out.json"
+            }
+        },
+        "getRoleCapacities_jG1k8FwUsingGET": {
+            "main": "./lib/actions/action.js",
             "title": "Get the capacity segments of a role",
             "description": "Returns the capacity segments for the role specified by the given ID. Returns an empty list if no capacity segments exist.",
             "fields": {
@@ -653,13 +1343,17 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/roleCapacities/{roleId}",
+                "method": "get"
+            },
             "metadata": {
-                "in": "./lib/schemas/getRoleCapacities_m8NDl80UsingGET.in.json",
-                "out": "./lib/schemas/getRoleCapacities_m8NDl80UsingGET.out.json"
+                "in": "./lib/schemas/getRoleCapacities_jG1k8FwUsingGET.in.json",
+                "out": "./lib/schemas/getRoleCapacities_jG1k8FwUsingGET.out.json"
             }
         },
-        "updateRoleCapacities__wj8JRcUsingPOST": {
-            "main": "./lib/actions/updateRoleCapacities__wj8JRcUsingPOST.js",
+        "updateRoleCapacities_ax3RIEkUsingPOST": {
+            "main": "./lib/actions/action.js",
             "title": "Update the capacity segments of a role",
             "description": "Updates the capacity segments for the role specified by the given ID. To erase all capacity segments, send a segment without start or finish and 0 capacity",
             "fields": {
@@ -668,9 +1362,14 @@
                     "label": "Debug this step (log more data)"
                 }
             },
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/roleCapacities/{roleId}",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
             "metadata": {
-                "in": "./lib/schemas/updateRoleCapacities__wj8JRcUsingPOST.in.json",
-                "out": "./lib/schemas/updateRoleCapacities__wj8JRcUsingPOST.out.json"
+                "in": "./lib/schemas/updateRoleCapacities_ax3RIEkUsingPOST.in.json",
+                "out": "./lib/schemas/updateRoleCapacities_ax3RIEkUsingPOST.out.json"
             }
         }
     }
