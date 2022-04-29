@@ -96,17 +96,17 @@
                 "out": "./lib/schemas/getAllResourcesUsingGET.out.json"
             }
         },
-        "getAllRolesUsingGET": {
+        "getAllPortfoliosUsingGET": {
             "main": "./lib/triggers/trigger.js",
-            "title": "Get a List of Roles",
-            "description": "Returns a list of all available roles. If no roles are available, an empty list is returned.",
+            "title": "Get a List of Portfolios",
+            "description": "Returns a list of all available portfolios. If you do not have the right to view any portfolio, Returns a list of all available portfolios that you have the right to access via your API token. If you do not have the right to view any portfolio, an empty list will be returned.",
             "callParams": {
-                "pathName": "/v1/roles",
+                "pathName": "/v1/portfolios",
                 "method": "get"
             },
             "metadata": {
-                "in": "./lib/schemas/getAllRolesUsingGET.in.json",
-                "out": "./lib/schemas/getAllRolesUsingGET.out.json"
+                "in": "./lib/schemas/getAllPortfoliosUsingGET.in.json",
+                "out": "./lib/schemas/getAllPortfoliosUsingGET.out.json"
             }
         },
         "getCalendarDeviations_iZk_ChUUsingGET": {
@@ -122,17 +122,17 @@
                 "out": "./lib/schemas/getCalendarDeviations_iZk_ChUUsingGET.out.json"
             }
         },
-        "getAllScenariosUsingGET": {
+        "getAllRolesUsingGET": {
             "main": "./lib/triggers/trigger.js",
-            "title": "Get a List of Scenarios",
-            "description": "It returns a list of scenarios",
+            "title": "Get a List of Roles",
+            "description": "Returns a list of all available roles. If no roles are available, an empty list is returned.",
             "callParams": {
-                "pathName": "/v1/scenarios",
+                "pathName": "/v1/roles",
                 "method": "get"
             },
             "metadata": {
-                "in": "./lib/schemas/getAllScenariosUsingGET.in.json",
-                "out": "./lib/schemas/getAllScenariosUsingGET.out.json"
+                "in": "./lib/schemas/getAllRolesUsingGET.in.json",
+                "out": "./lib/schemas/getAllRolesUsingGET.out.json"
             }
         },
         "getAllMilestoneDependencies_hzmYo7UUsingGET": {
@@ -148,30 +148,17 @@
                 "out": "./lib/schemas/getAllMilestoneDependencies_hzmYo7UUsingGET.out.json"
             }
         },
-        "getAllObsUnits_7pgMY_IUsingGET": {
+        "getAllScenariosUsingGET": {
             "main": "./lib/triggers/trigger.js",
-            "title": "Get all OBS Units",
-            "description": "This endpoint returns a list of all OBS units for the given OBS type.",
+            "title": "Get a List of Scenarios",
+            "description": "It returns a list of scenarios",
             "callParams": {
-                "pathName": "/v1/obsTypes/{obsTypeId}/obsUnits",
+                "pathName": "/v1/scenarios",
                 "method": "get"
             },
             "metadata": {
-                "in": "./lib/schemas/getAllObsUnits_7pgMY_IUsingGET.in.json",
-                "out": "./lib/schemas/getAllObsUnits_7pgMY_IUsingGET.out.json"
-            }
-        },
-        "getAllPrograms_tw6vMqYUsingGET": {
-            "main": "./lib/triggers/trigger.js",
-            "title": "Get a List of Programs",
-            "description": "Returns a list of programs in the given scenario",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/programs",
-                "method": "get"
-            },
-            "metadata": {
-                "in": "./lib/schemas/getAllPrograms_tw6vMqYUsingGET.in.json",
-                "out": "./lib/schemas/getAllPrograms_tw6vMqYUsingGET.out.json"
+                "in": "./lib/schemas/getAllScenariosUsingGET.in.json",
+                "out": "./lib/schemas/getAllScenariosUsingGET.out.json"
             }
         },
         "getAllProjects_JzzOaQEUsingGET": {
@@ -187,6 +174,19 @@
                 "out": "./lib/schemas/getAllProjects_JzzOaQEUsingGET.out.json"
             }
         },
+        "getAllPrograms_tw6vMqYUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get a List of Programs",
+            "description": "Returns a list of programs in the given scenario",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/programs",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getAllPrograms_tw6vMqYUsingGET.in.json",
+                "out": "./lib/schemas/getAllPrograms_tw6vMqYUsingGET.out.json"
+            }
+        },
         "getAllActualTimeWorked_3vWRFTIUsingGET": {
             "main": "./lib/triggers/trigger.js",
             "title": "Get a List of Actual Time Worked",
@@ -198,6 +198,45 @@
             "metadata": {
                 "in": "./lib/schemas/getAllActualTimeWorked_3vWRFTIUsingGET.in.json",
                 "out": "./lib/schemas/getAllActualTimeWorked_3vWRFTIUsingGET.out.json"
+            }
+        },
+        "getAllObsUnits_7pgMY_IUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get all OBS Units",
+            "description": "This endpoint returns a list of all OBS units for the given OBS type.",
+            "callParams": {
+                "pathName": "/v1/obsTypes/{obsTypeId}/obsUnits",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getAllObsUnits_7pgMY_IUsingGET.in.json",
+                "out": "./lib/schemas/getAllObsUnits_7pgMY_IUsingGET.out.json"
+            }
+        },
+        "getAllMilestones_MhivO5AUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get a List of Milestones",
+            "description": "Returns a list of milestones of a project",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getAllMilestones_MhivO5AUsingGET.in.json",
+                "out": "./lib/schemas/getAllMilestones_MhivO5AUsingGET.out.json"
+            }
+        },
+        "getAllFinancials_MhivO5AUsingGET": {
+            "main": "./lib/triggers/trigger.js",
+            "title": "Get a List of Financials",
+            "description": "Returns a list of financials of a project",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getAllFinancials_MhivO5AUsingGET.in.json",
+                "out": "./lib/schemas/getAllFinancials_MhivO5AUsingGET.out.json"
             }
         },
         "getAllAllocations_MhivO5AUsingGET": {
@@ -225,48 +264,36 @@
                 "in": "./lib/schemas/getAllRoleCapacities_tw6vMqYUsingGET.in.json",
                 "out": "./lib/schemas/getAllRoleCapacities_tw6vMqYUsingGET.out.json"
             }
-        },
-        "getAllFinancials_MhivO5AUsingGET": {
-            "main": "./lib/triggers/trigger.js",
-            "title": "Get a List of Financials",
-            "description": "Returns a list of financials of a project",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials",
-                "method": "get"
-            },
-            "metadata": {
-                "in": "./lib/schemas/getAllFinancials_MhivO5AUsingGET.in.json",
-                "out": "./lib/schemas/getAllFinancials_MhivO5AUsingGET.out.json"
-            }
-        },
-        "getAllMilestones_MhivO5AUsingGET": {
-            "main": "./lib/triggers/trigger.js",
-            "title": "Get a List of Milestones",
-            "description": "Returns a list of milestones of a project",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones",
-                "method": "get"
-            },
-            "metadata": {
-                "in": "./lib/schemas/getAllMilestones_MhivO5AUsingGET.in.json",
-                "out": "./lib/schemas/getAllMilestones_MhivO5AUsingGET.out.json"
-            }
-        },
-        "getAllPortfoliosUsingGET": {
-            "main": "./lib/triggers/trigger.js",
-            "title": "Get a List of Portfolios",
-            "description": "Returns a list of all available portfolios. If you do not have the right to view any portfolio, Returns a list of all available portfolios that you have the right to access via your API token. If you do not have the right to view any portfolio, an empty list will be returned.",
-            "callParams": {
-                "pathName": "/v1/portfolios",
-                "method": "get"
-            },
-            "metadata": {
-                "in": "./lib/schemas/getAllPortfoliosUsingGET.in.json",
-                "out": "./lib/schemas/getAllPortfoliosUsingGET.out.json"
-            }
         }
     },
     "actions": {
+        "getCalendarById_x0so0eQUsingGET": {
+            "main": "./lib/actions/action.js",
+            "title": "Get Calendars by ID",
+            "description": "Get one calendar in your Meisterplan system. Use the special ID <tt>defaultCalendar</tt> to get the default calendar.",
+            "callParams": {
+                "pathName": "/v1/calendars/{calendarId}",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getCalendarById_x0so0eQUsingGET.in.json",
+                "out": "./lib/schemas/getCalendarById_x0so0eQUsingGET.out.json"
+            }
+        },
+        "createCalendarExceptions_rWuXRCMUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Calendar Exceptions",
+            "description": "Use this request to replace all calendar exceptions for a certain time period.\nThis time period can be defined using the root start and finish attributes of the request.\nSpecify the new list of calendar exceptions with the <tt>exceptions</tt> property.\nNote that all exceptions in the specified period will be overwritten by the exceptions listed in the <tt>exceptions</tt> property.\n<ul><li> If null is used for the start period and end period, all exceptions of the calendar are overwritten</li>\n<li> If only the start date of the period is defined, all exceptions starting from this time will be overwritten</li>\n<li> If only the end date of the period is defined, all exceptions up to that point will be overwritten</li>\n<li> If an exception is removed and a parent calendar has an exception at that date, this calendar inherits the exception from the parent calendar.\n</ul>\n",
+            "callParams": {
+                "pathName": "/v1/calendars/{calendarId}/exceptions",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createCalendarExceptions_rWuXRCMUsingPOST.in.json",
+                "out": "./lib/schemas/createCalendarExceptions_rWuXRCMUsingPOST.out.json"
+            }
+        },
         "createCalendarUsingPOST": {
             "main": "./lib/actions/action.js",
             "title": "Create Calendars",
@@ -279,6 +306,20 @@
             "metadata": {
                 "in": "./lib/schemas/createCalendarUsingPOST.in.json",
                 "out": "./lib/schemas/createCalendarUsingPOST.out.json"
+            }
+        },
+        "setDefaultCalendarUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Set Default Calendar",
+            "description": "Sets an existing calendar as the default calendar in your Meisterplan system.",
+            "callParams": {
+                "pathName": "/v1/calendars/defaultCalendar",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/setDefaultCalendarUsingPOST.in.json",
+                "out": "./lib/schemas/setDefaultCalendarUsingPOST.out.json"
             }
         },
         "createObsTypeUsingPOST": {
@@ -309,17 +350,18 @@
                 "out": "./lib/schemas/createObsUnit_bVyytFEUsingPOST.out.json"
             }
         },
-        "getCalendarById_x0so0eQUsingGET": {
+        "updateCalendar_rWuXRCMUsingPATCH": {
             "main": "./lib/actions/action.js",
-            "title": "Get Calendars by ID",
-            "description": "Get one calendar in your Meisterplan system. Use the special ID <tt>defaultCalendar</tt> to get the default calendar.",
+            "title": "Update Calendars",
+            "description": "Perform an update on a calendar specified by the given ID.\n\n<h4>Paths</h4><p>Paths delimited by <tt>/</tt> (e.g. in calendars and OBS unit paths)\n    may define path segments which contain <tt>/</tt> by escaping with <tt>//</tt>. E.g. the path\n    <tT>Europe/Berlin//Amsterdam</tt> will be interpreted as <tt>['Europe', 'Berlin/Amsterdam']</tt>.\n    An uneven amount of slashes will be interpreted as the following segment starting with one or more slashes.</p>",
             "callParams": {
                 "pathName": "/v1/calendars/{calendarId}",
-                "method": "get"
+                "method": "patch",
+                "requestContentType": "application/json"
             },
             "metadata": {
-                "in": "./lib/schemas/getCalendarById_x0so0eQUsingGET.in.json",
-                "out": "./lib/schemas/getCalendarById_x0so0eQUsingGET.out.json"
+                "in": "./lib/schemas/updateCalendar_rWuXRCMUsingPATCH.in.json",
+                "out": "./lib/schemas/updateCalendar_rWuXRCMUsingPATCH.out.json"
             }
         },
         "updateObsType_bVyytFEUsingPATCH": {
@@ -336,85 +378,17 @@
                 "out": "./lib/schemas/updateObsType_bVyytFEUsingPATCH.out.json"
             }
         },
-        "updateCalendar_rWuXRCMUsingPATCH": {
+        "getObsUnit_i05leloUsingGET": {
             "main": "./lib/actions/action.js",
-            "title": "Update Calendars",
-            "description": "Perform an update on a calendar specified by the given ID.\n\n<h4>Paths</h4><p>Paths delimited by <tt>/</tt> (e.g. in calendars and OBS unit paths)\n    may define path segments which contain <tt>/</tt> by escaping with <tt>//</tt>. E.g. the path\n    <tT>Europe/Berlin//Amsterdam</tt> will be interpreted as <tt>['Europe', 'Berlin/Amsterdam']</tt>.\n    An uneven amount of slashes will be interpreted as the following segment starting with one or more slashes.</p>",
+            "title": "Get an OBS Unit",
+            "description": "This endpoint returns a single OBS unit.",
             "callParams": {
-                "pathName": "/v1/calendars/{calendarId}",
-                "method": "patch",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/updateCalendar_rWuXRCMUsingPATCH.in.json",
-                "out": "./lib/schemas/updateCalendar_rWuXRCMUsingPATCH.out.json"
-            }
-        },
-        "deleteCalendarById_x0so0eQUsingDELETE": {
-            "main": "./lib/actions/action.js",
-            "title": "Delete Calendars",
-            "description": "Deletes a calendar in your Meisterplan system. Please note that the default calendar or a parent of the default calendar cannot be deleted.",
-            "callParams": {
-                "pathName": "/v1/calendars/{calendarId}",
-                "method": "delete"
-            },
-            "metadata": {
-                "in": "./lib/schemas/deleteCalendarById_x0so0eQUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteCalendarById_x0so0eQUsingDELETE.out.json"
-            }
-        },
-        "getObsTypeById_7pgMY_IUsingGET": {
-            "main": "./lib/actions/action.js",
-            "title": "Get an OBS Type by ID",
-            "description": "This endpoint is for OBS types only. To get OBS units, use <tt>/obsTypes/&lt;obs-type-id&gt;/obsUnits",
-            "callParams": {
-                "pathName": "/v1/obsTypes/{obsTypeId}",
+                "pathName": "/v1/obsTypes/{obsTypeId}/obsUnits/{obsUnitId}",
                 "method": "get"
             },
             "metadata": {
-                "in": "./lib/schemas/getObsTypeById_7pgMY_IUsingGET.in.json",
-                "out": "./lib/schemas/getObsTypeById_7pgMY_IUsingGET.out.json"
-            }
-        },
-        "setDefaultCalendarUsingPOST": {
-            "main": "./lib/actions/action.js",
-            "title": "Set Default Calendar",
-            "description": "Sets an existing calendar as the default calendar in your Meisterplan system.",
-            "callParams": {
-                "pathName": "/v1/calendars/defaultCalendar",
-                "method": "post",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/setDefaultCalendarUsingPOST.in.json",
-                "out": "./lib/schemas/setDefaultCalendarUsingPOST.out.json"
-            }
-        },
-        "deleteObsUnit_i05leloUsingDELETE": {
-            "main": "./lib/actions/action.js",
-            "title": "Delete an OBS Unit by ID",
-            "description": "Deletes the OBS unit specified by the given ID. If the OBS unit with the given ID does not exist, the request will fail.",
-            "callParams": {
-                "pathName": "/v1/obsTypes/{obsTypeId}/obsUnits/{obsUnitId}",
-                "method": "delete"
-            },
-            "metadata": {
-                "in": "./lib/schemas/deleteObsUnit_i05leloUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteObsUnit_i05leloUsingDELETE.out.json"
-            }
-        },
-        "updateObsUnit_BWy5g9QUsingPATCH": {
-            "main": "./lib/actions/action.js",
-            "title": "Update an OBS Unit",
-            "description": "Updates a single OBS unit's name or moves it to a different parent.",
-            "callParams": {
-                "pathName": "/v1/obsTypes/{obsTypeId}/obsUnits/{obsUnitId}",
-                "method": "patch",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/updateObsUnit_BWy5g9QUsingPATCH.in.json",
-                "out": "./lib/schemas/updateObsUnit_BWy5g9QUsingPATCH.out.json"
+                "in": "./lib/schemas/getObsUnit_i05leloUsingGET.in.json",
+                "out": "./lib/schemas/getObsUnit_i05leloUsingGET.out.json"
             }
         },
         "createResourceUsingPOST": {
@@ -444,6 +418,19 @@
                 "out": "./lib/schemas/deleteResource_JzhwzjkUsingDELETE.out.json"
             }
         },
+        "getResourceById_JzhwzjkUsingGET": {
+            "main": "./lib/actions/action.js",
+            "title": "Get Resources by ID",
+            "description": "Returns the individual resource specified by the given ID.",
+            "callParams": {
+                "pathName": "/v1/resources/{resourceId}",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getResourceById_JzhwzjkUsingGET.in.json",
+                "out": "./lib/schemas/getResourceById_JzhwzjkUsingGET.out.json"
+            }
+        },
         "updateResource_Sg6N_wkUsingPATCH": {
             "main": "./lib/actions/action.js",
             "title": "Update Resources",
@@ -458,30 +445,18 @@
                 "out": "./lib/schemas/updateResource_Sg6N_wkUsingPATCH.out.json"
             }
         },
-        "getResourceById_JzhwzjkUsingGET": {
+        "updateObsUnit_BWy5g9QUsingPATCH": {
             "main": "./lib/actions/action.js",
-            "title": "Get Resources by ID",
-            "description": "Returns the individual resource specified by the given ID.",
-            "callParams": {
-                "pathName": "/v1/resources/{resourceId}",
-                "method": "get"
-            },
-            "metadata": {
-                "in": "./lib/schemas/getResourceById_JzhwzjkUsingGET.in.json",
-                "out": "./lib/schemas/getResourceById_JzhwzjkUsingGET.out.json"
-            }
-        },
-        "getObsUnit_i05leloUsingGET": {
-            "main": "./lib/actions/action.js",
-            "title": "Get an OBS Unit",
-            "description": "This endpoint returns a single OBS unit.",
+            "title": "Update an OBS Unit",
+            "description": "Updates a single OBS unit's name or moves it to a different parent.",
             "callParams": {
                 "pathName": "/v1/obsTypes/{obsTypeId}/obsUnits/{obsUnitId}",
-                "method": "get"
+                "method": "patch",
+                "requestContentType": "application/json"
             },
             "metadata": {
-                "in": "./lib/schemas/getObsUnit_i05leloUsingGET.in.json",
-                "out": "./lib/schemas/getObsUnit_i05leloUsingGET.out.json"
+                "in": "./lib/schemas/updateObsUnit_BWy5g9QUsingPATCH.in.json",
+                "out": "./lib/schemas/updateObsUnit_BWy5g9QUsingPATCH.out.json"
             }
         },
         "createRoleUsingPOST": {
@@ -498,31 +473,17 @@
                 "out": "./lib/schemas/createRoleUsingPOST.out.json"
             }
         },
-        "deleteRole_7FSeu28UsingDELETE": {
+        "deleteObsUnit_i05leloUsingDELETE": {
             "main": "./lib/actions/action.js",
-            "title": "Delete Roles",
-            "description": "Delete the role specified by the given ID. If the role with the given ID does not exist, the request will fail.",
+            "title": "Delete an OBS Unit by ID",
+            "description": "Deletes the OBS unit specified by the given ID. If the OBS unit with the given ID does not exist, the request will fail.",
             "callParams": {
-                "pathName": "/v1/roles/{roleId}",
+                "pathName": "/v1/obsTypes/{obsTypeId}/obsUnits/{obsUnitId}",
                 "method": "delete"
             },
             "metadata": {
-                "in": "./lib/schemas/deleteRole_7FSeu28UsingDELETE.in.json",
-                "out": "./lib/schemas/deleteRole_7FSeu28UsingDELETE.out.json"
-            }
-        },
-        "createCalendarExceptions_rWuXRCMUsingPOST": {
-            "main": "./lib/actions/action.js",
-            "title": "Update Calendar Exceptions",
-            "description": "Use this request to replace all calendar exceptions for a certain time period.\nThis time period can be defined using the root start and finish attributes of the request.\nSpecify the new list of calendar exceptions with the <tt>exceptions</tt> property.\nNote that all exceptions in the specified period will be overwritten by the exceptions listed in the <tt>exceptions</tt> property.\n<ul><li> If null is used for the start period and end period, all exceptions of the calendar are overwritten</li>\n<li> If only the start date of the period is defined, all exceptions starting from this time will be overwritten</li>\n<li> If only the end date of the period is defined, all exceptions up to that point will be overwritten</li>\n<li> If an exception is removed and a parent calendar has an exception at that date, this calendar inherits the exception from the parent calendar.\n</ul>\n",
-            "callParams": {
-                "pathName": "/v1/calendars/{calendarId}/exceptions",
-                "method": "post",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/createCalendarExceptions_rWuXRCMUsingPOST.in.json",
-                "out": "./lib/schemas/createCalendarExceptions_rWuXRCMUsingPOST.out.json"
+                "in": "./lib/schemas/deleteObsUnit_i05leloUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteObsUnit_i05leloUsingDELETE.out.json"
             }
         },
         "updateCalendarDeviations_Sg6N_wkUsingPOST": {
@@ -539,31 +500,17 @@
                 "out": "./lib/schemas/updateCalendarDeviations_Sg6N_wkUsingPOST.out.json"
             }
         },
-        "updateProgram_ajwqVRYUsingPATCH": {
+        "deleteRole_7FSeu28UsingDELETE": {
             "main": "./lib/actions/action.js",
-            "title": "Update Programs",
-            "description": "Perform an update on a program specified by the given ID.",
+            "title": "Delete Roles",
+            "description": "Delete the role specified by the given ID. If the role with the given ID does not exist, the request will fail.",
             "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/programs/{programId}",
-                "method": "patch",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/updateProgram_ajwqVRYUsingPATCH.in.json",
-                "out": "./lib/schemas/updateProgram_ajwqVRYUsingPATCH.out.json"
-            }
-        },
-        "deleteMilestoneDependency_Tu7aLsoUsingDELETE": {
-            "main": "./lib/actions/action.js",
-            "title": "Delete Milestone Dependencies",
-            "description": "Deletes a milestone dependency in a given scenario.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/milestoneDependencies/{milestoneDependencyId}",
+                "pathName": "/v1/roles/{roleId}",
                 "method": "delete"
             },
             "metadata": {
-                "in": "./lib/schemas/deleteMilestoneDependency_Tu7aLsoUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteMilestoneDependency_Tu7aLsoUsingDELETE.out.json"
+                "in": "./lib/schemas/deleteRole_7FSeu28UsingDELETE.in.json",
+                "out": "./lib/schemas/deleteRole_7FSeu28UsingDELETE.out.json"
             }
         },
         "getScenarioById_tw6vMqYUsingGET": {
@@ -577,275 +524,6 @@
             "metadata": {
                 "in": "./lib/schemas/getScenarioById_tw6vMqYUsingGET.in.json",
                 "out": "./lib/schemas/getScenarioById_tw6vMqYUsingGET.out.json"
-            }
-        },
-        "createProgram_Tu7aLsoUsingPOST": {
-            "main": "./lib/actions/action.js",
-            "title": "Create Programs",
-            "description": "Creates a program with the given fields and returns the newly created program.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/programs",
-                "method": "post",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/createProgram_Tu7aLsoUsingPOST.in.json",
-                "out": "./lib/schemas/createProgram_Tu7aLsoUsingPOST.out.json"
-            }
-        },
-        "deleteObsType_7pgMY_IUsingDELETE": {
-            "main": "./lib/actions/action.js",
-            "title": "Delete an OBS Type by ID",
-            "description": "Delete the OBS type specified by the given ID. If the OBS type with the given ID does not exist, the request will fail.",
-            "callParams": {
-                "pathName": "/v1/obsTypes/{obsTypeId}",
-                "method": "delete"
-            },
-            "metadata": {
-                "in": "./lib/schemas/deleteObsType_7pgMY_IUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteObsType_7pgMY_IUsingDELETE.out.json"
-            }
-        },
-        "deleteProgram_E6pcOgYUsingDELETE": {
-            "main": "./lib/actions/action.js",
-            "title": "Delete Programs",
-            "description": "Deletes a program specified by the given ID.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/programs/{programId}",
-                "method": "delete"
-            },
-            "metadata": {
-                "in": "./lib/schemas/deleteProgram_E6pcOgYUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteProgram_E6pcOgYUsingDELETE.out.json"
-            }
-        },
-        "getRoleById_7FSeu28UsingGET": {
-            "main": "./lib/actions/action.js",
-            "title": "Get Roles by ID",
-            "description": "Returns the individual role specified by the given ID.",
-            "callParams": {
-                "pathName": "/v1/roles/{roleId}",
-                "method": "get"
-            },
-            "metadata": {
-                "in": "./lib/schemas/getRoleById_7FSeu28UsingGET.in.json",
-                "out": "./lib/schemas/getRoleById_7FSeu28UsingGET.out.json"
-            }
-        },
-        "createProject_Tu7aLsoUsingPOST": {
-            "main": "./lib/actions/action.js",
-            "title": "Create Projects",
-            "description": "Creates a project with the given fields and returns the newly created project.\n<h3>Notes:</h3>\n<h4>Paths</h4><p>Paths delimited by <tt>/</tt> (e.g. in calendars and OBS unit paths)\n    may define path segments which contain <tt>/</tt> by escaping with <tt>//</tt>. E.g. the path\n    <tT>Europe/Berlin//Amsterdam</tt> will be interpreted as <tt>['Europe', 'Berlin/Amsterdam']</tt>.\n    An uneven amount of slashes will be interpreted as the following segment starting with one or more slashes.</p>\n<h4>Custom Fields</h4><p>Custom fields are defined <b>as properties of</b> the <tt>customFields</tt> object.\n    The property name of a custom field corresponds to its column name. A custom field is an object containing a value.\nThe value can be of type string, number or boolean depending on the type of custom field. You can view all available custom fields with their respective\ncolumn names in your Meisterplan system.</p>\n<p>\nFor custom fields of type string, text, lookup or url, the value is of JSON type string.<br>\nFor custom fields of type integer, decimal or currency, the value is of JSON type float.<br>\nFor custom fields of type boolean, the value is of JSON type boolean.<br>\n</p>\n<p>\nExample:\n</p>\n<pre>\n\"customFields\":{\n  \"cust_stage_gate\":{\n    \"value\": \"New\"\n  }\n  ...\n}\n</pre>\n\n\n<h4>Priorities</h4>\n<p>Projects may be assigned to a program, or they can be given a rank category. It is not possible to assign a\nproject to a rank category and a program at the same time. Assigning an existing project to a rank category will\nunassign it from any program it may be assigned to. Assigning an existing project to a program may mean that its rank\n category changes, if the target program is in a different rank category.\n</p>\n<p>\nIt is currently not possible to prioritize projects within a program.\n</p>\n\n    ",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects",
-                "method": "post",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/createProject_Tu7aLsoUsingPOST.in.json",
-                "out": "./lib/schemas/createProject_Tu7aLsoUsingPOST.out.json"
-            }
-        },
-        "deleteProject_MhivO5AUsingDELETE": {
-            "main": "./lib/actions/action.js",
-            "title": "Delete Projects",
-            "description": "Deletes a project in a given scenario.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}",
-                "method": "delete"
-            },
-            "metadata": {
-                "in": "./lib/schemas/deleteProject_MhivO5AUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteProject_MhivO5AUsingDELETE.out.json"
-            }
-        },
-        "createOrUpdateActualTimeWorked_K0e4OZEUsingPOST": {
-            "main": "./lib/actions/action.js",
-            "title": "Create or Update Actual Time Worked",
-            "description": "This endpoint lets you create new Actual Time Worked and update the existing Actual Time Worked of a project by an entity (resource or role). We will not update Actual Time Worked for booking dates that are not specified in the request for a given project and entity. With the <tt>mode</tt> property you can control if an existing Actual Time Worked value is replaced by the new value or if its value is added to the booking in the request.Please note that actual time worked data itself is independent from its scenario. It will be the same across all scenarios for a given project.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/actuals",
-                "method": "post",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/createOrUpdateActualTimeWorked_K0e4OZEUsingPOST.in.json",
-                "out": "./lib/schemas/createOrUpdateActualTimeWorked_K0e4OZEUsingPOST.out.json"
-            }
-        },
-        "deleteAllActualTimeWorked_MhivO5AUsingDELETE": {
-            "main": "./lib/actions/action.js",
-            "title": "Delete Actual Time Worked",
-            "description": "Deletes all actual time worked of a given project.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/actuals",
-                "method": "delete"
-            },
-            "metadata": {
-                "in": "./lib/schemas/deleteAllActualTimeWorked_MhivO5AUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteAllActualTimeWorked_MhivO5AUsingDELETE.out.json"
-            }
-        },
-        "getAllocationId_bc5zYTgUsingGET": {
-            "main": "./lib/actions/action.js",
-            "title": "Get Allocations by ID",
-            "description": "Returns the individual allocation specified by the given ID.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations/{allocationId}",
-                "method": "get"
-            },
-            "metadata": {
-                "in": "./lib/schemas/getAllocationId_bc5zYTgUsingGET.in.json",
-                "out": "./lib/schemas/getAllocationId_bc5zYTgUsingGET.out.json"
-            }
-        },
-        "createOrUpdateAllocation_K0e4OZEUsingPOST": {
-            "main": "./lib/actions/action.js",
-            "title": "Create or Update Allocations",
-            "description": "This endpoint lets you create new allocations and update existing allocations of a project. Changes will only be made for the specified date ranges as well as the specified resources and roles. ",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations",
-                "method": "post",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/createOrUpdateAllocation_K0e4OZEUsingPOST.in.json",
-                "out": "./lib/schemas/createOrUpdateAllocation_K0e4OZEUsingPOST.out.json"
-            }
-        },
-        "deleteFinancials_vi4Ugd4UsingDELETE": {
-            "main": "./lib/actions/action.js",
-            "title": "Delete Financials",
-            "description": "Deletes a financial event in a given project of a scenario.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials/{financialsId}",
-                "method": "delete"
-            },
-            "metadata": {
-                "in": "./lib/schemas/deleteFinancials_vi4Ugd4UsingDELETE.in.json",
-                "out": "./lib/schemas/deleteFinancials_vi4Ugd4UsingDELETE.out.json"
-            }
-        },
-        "createFinancials_K0e4OZEUsingPOST": {
-            "main": "./lib/actions/action.js",
-            "title": "Create Financials",
-            "description": "Returns the newly created financial event.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials",
-                "method": "post",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/createFinancials_K0e4OZEUsingPOST.in.json",
-                "out": "./lib/schemas/createFinancials_K0e4OZEUsingPOST.out.json"
-            }
-        },
-        "updateAllocation_3rzM9CAUsingPATCH": {
-            "main": "./lib/actions/action.js",
-            "title": "Update Allocations",
-            "description": "This endpoint lets you update existing allocations of a project. Changes will only be made for the specified date ranges as well as the specified resources and roles.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations/{allocationId}",
-                "method": "patch",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/updateAllocation_3rzM9CAUsingPATCH.in.json",
-                "out": "./lib/schemas/updateAllocation_3rzM9CAUsingPATCH.out.json"
-            }
-        },
-        "updatePriorities_Tu7aLsoUsingPOST": {
-            "main": "./lib/actions/action.js",
-            "title": "Update Priorities",
-            "description": "This endpoint updates the priorities of projects and programs. Please consider that updating the priority of a project that is within a program results in unassigning the project from its program.To update the priorities of your projects and programs, list their IDs in the desired order of priority for each rank category. If there are projects or programs in Meisterplan for a particular rank category that are not mentioned in your list, you can use the <tt>position</tt> parameter to define whether your listed projects and programs will be ranked above or below those in Meisterplan.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/priorities",
-                "method": "post",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/updatePriorities_Tu7aLsoUsingPOST.in.json",
-                "out": "./lib/schemas/updatePriorities_Tu7aLsoUsingPOST.out.json"
-            }
-        },
-        "deleteAllocation_bc5zYTgUsingDELETE": {
-            "main": "./lib/actions/action.js",
-            "title": "Delete Allocations",
-            "description": "Deletes an allocation in a given project of a scenario.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations/{allocationId}",
-                "method": "delete"
-            },
-            "metadata": {
-                "in": "./lib/schemas/deleteAllocation_bc5zYTgUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteAllocation_bc5zYTgUsingDELETE.out.json"
-            }
-        },
-        "getFinancialsById_vi4Ugd4UsingGET": {
-            "main": "./lib/actions/action.js",
-            "title": "Get Financials by ID",
-            "description": "Returns the individual financial event specified by the given ID.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials/{financialsId}",
-                "method": "get"
-            },
-            "metadata": {
-                "in": "./lib/schemas/getFinancialsById_vi4Ugd4UsingGET.in.json",
-                "out": "./lib/schemas/getFinancialsById_vi4Ugd4UsingGET.out.json"
-            }
-        },
-        "getMilestoneById_WmP8qGUUsingGET": {
-            "main": "./lib/actions/action.js",
-            "title": "Get Milestones by ID",
-            "description": "Returns the individual milestone specified by the given ID.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones/{milestoneId}",
-                "method": "get"
-            },
-            "metadata": {
-                "in": "./lib/schemas/getMilestoneById_WmP8qGUUsingGET.in.json",
-                "out": "./lib/schemas/getMilestoneById_WmP8qGUUsingGET.out.json"
-            }
-        },
-        "createMilestoneDependency_Tu7aLsoUsingPOST": {
-            "main": "./lib/actions/action.js",
-            "title": "Create a Milestone Dependency",
-            "description": "Returns the id of the newly created milestone dependency",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/milestoneDependencies",
-                "method": "post",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/createMilestoneDependency_Tu7aLsoUsingPOST.in.json",
-                "out": "./lib/schemas/createMilestoneDependency_Tu7aLsoUsingPOST.out.json"
-            }
-        },
-        "updateMilestone_YnoWQjUUsingPATCH": {
-            "main": "./lib/actions/action.js",
-            "title": "Update Milestones",
-            "description": "Perform an update on a milestone specified by the given ID.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones/{milestoneId}",
-                "method": "patch",
-                "requestContentType": "application/json"
-            },
-            "metadata": {
-                "in": "./lib/schemas/updateMilestone_YnoWQjUUsingPATCH.in.json",
-                "out": "./lib/schemas/updateMilestone_YnoWQjUUsingPATCH.out.json"
-            }
-        },
-        "deleteMilestone_WmP8qGUUsingDELETE": {
-            "main": "./lib/actions/action.js",
-            "title": "Delete Milestones",
-            "description": "Deletes a milestone in a given project of a scenario.",
-            "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones/{milestoneId}",
-                "method": "delete"
-            },
-            "metadata": {
-                "in": "./lib/schemas/deleteMilestone_WmP8qGUUsingDELETE.in.json",
-                "out": "./lib/schemas/deleteMilestone_WmP8qGUUsingDELETE.out.json"
             }
         },
         "updateRole_4_jUfJkUsingPATCH": {
@@ -862,32 +540,139 @@
                 "out": "./lib/schemas/updateRole_4_jUfJkUsingPATCH.out.json"
             }
         },
-        "createMilestone_K0e4OZEUsingPOST": {
+        "getRoleById_7FSeu28UsingGET": {
             "main": "./lib/actions/action.js",
-            "title": "Create Milestones",
-            "description": "Returns the newly created milestone",
+            "title": "Get Roles by ID",
+            "description": "Returns the individual role specified by the given ID.",
             "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones",
+                "pathName": "/v1/roles/{roleId}",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getRoleById_7FSeu28UsingGET.in.json",
+                "out": "./lib/schemas/getRoleById_7FSeu28UsingGET.out.json"
+            }
+        },
+        "createProgram_Tu7aLsoUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create Programs",
+            "description": "Creates a program with the given fields and returns the newly created program.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/programs",
                 "method": "post",
                 "requestContentType": "application/json"
             },
             "metadata": {
-                "in": "./lib/schemas/createMilestone_K0e4OZEUsingPOST.in.json",
-                "out": "./lib/schemas/createMilestone_K0e4OZEUsingPOST.out.json"
+                "in": "./lib/schemas/createProgram_Tu7aLsoUsingPOST.in.json",
+                "out": "./lib/schemas/createProgram_Tu7aLsoUsingPOST.out.json"
             }
         },
-        "updateFinancials_KXr6_AUUsingPATCH": {
+        "updatePriorities_Tu7aLsoUsingPOST": {
             "main": "./lib/actions/action.js",
-            "title": "Update Financials",
-            "description": "Updates a financial event by ID in a given project of a scenario.",
+            "title": "Update Priorities",
+            "description": "This endpoint updates the priorities of projects and programs. Please consider that updating the priority of a project that is within a program results in unassigning the project from its program.To update the priorities of your projects and programs, list their IDs in the desired order of priority for each rank category. If there are projects or programs in Meisterplan for a particular rank category that are not mentioned in your list, you can use the <tt>position</tt> parameter to define whether your listed projects and programs will be ranked above or below those in Meisterplan.",
             "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials/{financialsId}",
+                "pathName": "/v1/scenarios/{scenarioId}/priorities",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/updatePriorities_Tu7aLsoUsingPOST.in.json",
+                "out": "./lib/schemas/updatePriorities_Tu7aLsoUsingPOST.out.json"
+            }
+        },
+        "updateProgram_ajwqVRYUsingPATCH": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Programs",
+            "description": "Perform an update on a program specified by the given ID.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/programs/{programId}",
                 "method": "patch",
                 "requestContentType": "application/json"
             },
             "metadata": {
-                "in": "./lib/schemas/updateFinancials_KXr6_AUUsingPATCH.in.json",
-                "out": "./lib/schemas/updateFinancials_KXr6_AUUsingPATCH.out.json"
+                "in": "./lib/schemas/updateProgram_ajwqVRYUsingPATCH.in.json",
+                "out": "./lib/schemas/updateProgram_ajwqVRYUsingPATCH.out.json"
+            }
+        },
+        "deleteProgram_E6pcOgYUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Programs",
+            "description": "Deletes a program specified by the given ID.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/programs/{programId}",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteProgram_E6pcOgYUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteProgram_E6pcOgYUsingDELETE.out.json"
+            }
+        },
+        "deleteMilestoneDependency_Tu7aLsoUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Milestone Dependencies",
+            "description": "Deletes a milestone dependency in a given scenario.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/milestoneDependencies/{milestoneDependencyId}",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteMilestoneDependency_Tu7aLsoUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteMilestoneDependency_Tu7aLsoUsingDELETE.out.json"
+            }
+        },
+        "createMilestoneDependency_Tu7aLsoUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create a Milestone Dependency",
+            "description": "Returns the id of the newly created milestone dependency",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/milestoneDependencies",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createMilestoneDependency_Tu7aLsoUsingPOST.in.json",
+                "out": "./lib/schemas/createMilestoneDependency_Tu7aLsoUsingPOST.out.json"
+            }
+        },
+        "getProjectById_MhivO5AUsingGET": {
+            "main": "./lib/actions/action.js",
+            "title": "Get Projects by ID",
+            "description": "Returns the individual project specified by the given ID.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getProjectById_MhivO5AUsingGET.in.json",
+                "out": "./lib/schemas/getProjectById_MhivO5AUsingGET.out.json"
+            }
+        },
+        "deleteProject_MhivO5AUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Projects",
+            "description": "Deletes a project in a given scenario.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteProject_MhivO5AUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteProject_MhivO5AUsingDELETE.out.json"
+            }
+        },
+        "createProject_Tu7aLsoUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create Projects",
+            "description": "Creates a project with the given fields and returns the newly created project.\n<h3>Notes:</h3>\n<h4>Paths</h4><p>Paths delimited by <tt>/</tt> (e.g. in calendars and OBS unit paths)\n    may define path segments which contain <tt>/</tt> by escaping with <tt>//</tt>. E.g. the path\n    <tT>Europe/Berlin//Amsterdam</tt> will be interpreted as <tt>['Europe', 'Berlin/Amsterdam']</tt>.\n    An uneven amount of slashes will be interpreted as the following segment starting with one or more slashes.</p>\n<h4>Custom Fields</h4><p>Custom fields are defined <b>as properties of</b> the <tt>customFields</tt> object.\n    The property name of a custom field corresponds to its column name. A custom field is an object containing a value.\nThe value can be of type string, number or boolean depending on the type of custom field. You can view all available custom fields with their respective\ncolumn names in your Meisterplan system.</p>\n<p>\nFor custom fields of type string, text, lookup or url, the value is of JSON type string.<br>\nFor custom fields of type integer, decimal or currency, the value is of JSON type float.<br>\nFor custom fields of type boolean, the value is of JSON type boolean.<br>\n</p>\n<p>\nExample:\n</p>\n<pre>\n\"customFields\":{\n  \"cust_stage_gate\":{\n    \"value\": \"New\"\n  }\n  ...\n}\n</pre>\n\n\n<h4>Priorities</h4>\n<p>Projects may be assigned to a program, or they can be given a rank category. It is not possible to assign a\nproject to a rank category and a program at the same time. Assigning an existing project to a rank category will\nunassign it from any program it may be assigned to. Assigning an existing project to a program may mean that its rank\n category changes, if the target program is in a different rank category.\n</p>\n<p>\nIt is currently not possible to prioritize projects within a program.\n</p>\n\n    ",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createProject_Tu7aLsoUsingPOST.in.json",
+                "out": "./lib/schemas/createProject_Tu7aLsoUsingPOST.out.json"
             }
         },
         "replaceAllocation_K0e4OZEUsingPUT": {
@@ -904,17 +689,84 @@
                 "out": "./lib/schemas/replaceAllocation_K0e4OZEUsingPUT.out.json"
             }
         },
-        "getProjectById_MhivO5AUsingGET": {
+        "createOrUpdateAllocation_K0e4OZEUsingPOST": {
             "main": "./lib/actions/action.js",
-            "title": "Get Projects by ID",
-            "description": "Returns the individual project specified by the given ID.",
+            "title": "Create or Update Allocations",
+            "description": "This endpoint lets you create new allocations and update existing allocations of a project. Changes will only be made for the specified date ranges as well as the specified resources and roles. ",
             "callParams": {
-                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}",
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createOrUpdateAllocation_K0e4OZEUsingPOST.in.json",
+                "out": "./lib/schemas/createOrUpdateAllocation_K0e4OZEUsingPOST.out.json"
+            }
+        },
+        "getAllocationId_bc5zYTgUsingGET": {
+            "main": "./lib/actions/action.js",
+            "title": "Get Allocations by ID",
+            "description": "Returns the individual allocation specified by the given ID.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations/{allocationId}",
                 "method": "get"
             },
             "metadata": {
-                "in": "./lib/schemas/getProjectById_MhivO5AUsingGET.in.json",
-                "out": "./lib/schemas/getProjectById_MhivO5AUsingGET.out.json"
+                "in": "./lib/schemas/getAllocationId_bc5zYTgUsingGET.in.json",
+                "out": "./lib/schemas/getAllocationId_bc5zYTgUsingGET.out.json"
+            }
+        },
+        "deleteAllocation_bc5zYTgUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Allocations",
+            "description": "Deletes an allocation in a given project of a scenario.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations/{allocationId}",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteAllocation_bc5zYTgUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteAllocation_bc5zYTgUsingDELETE.out.json"
+            }
+        },
+        "createOrUpdateActualTimeWorked_K0e4OZEUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create or Update Actual Time Worked",
+            "description": "This endpoint lets you create new Actual Time Worked and update the existing Actual Time Worked of a project by an entity (resource or role). We will not update Actual Time Worked for booking dates that are not specified in the request for a given project and entity. With the <tt>mode</tt> property you can control if an existing Actual Time Worked value is replaced by the new value or if its value is added to the booking in the request.Please note that actual time worked data itself is independent from its scenario. It will be the same across all scenarios for a given project.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/actuals",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createOrUpdateActualTimeWorked_K0e4OZEUsingPOST.in.json",
+                "out": "./lib/schemas/createOrUpdateActualTimeWorked_K0e4OZEUsingPOST.out.json"
+            }
+        },
+        "deleteCalendarById_x0so0eQUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Calendars",
+            "description": "Deletes a calendar in your Meisterplan system. Please note that the default calendar or a parent of the default calendar cannot be deleted.",
+            "callParams": {
+                "pathName": "/v1/calendars/{calendarId}",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteCalendarById_x0so0eQUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteCalendarById_x0so0eQUsingDELETE.out.json"
+            }
+        },
+        "deleteAllActualTimeWorked_MhivO5AUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Actual Time Worked",
+            "description": "Deletes all actual time worked of a given project.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/actuals",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteAllActualTimeWorked_MhivO5AUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteAllActualTimeWorked_MhivO5AUsingDELETE.out.json"
             }
         },
         "updateProject_K0e4OZEUsingPATCH": {
@@ -929,6 +781,74 @@
             "metadata": {
                 "in": "./lib/schemas/updateProject_K0e4OZEUsingPATCH.in.json",
                 "out": "./lib/schemas/updateProject_K0e4OZEUsingPATCH.out.json"
+            }
+        },
+        "updateFinancials_KXr6_AUUsingPATCH": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Financials",
+            "description": "Updates a financial event by ID in a given project of a scenario.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials/{financialsId}",
+                "method": "patch",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateFinancials_KXr6_AUUsingPATCH.in.json",
+                "out": "./lib/schemas/updateFinancials_KXr6_AUUsingPATCH.out.json"
+            }
+        },
+        "getMilestoneById_WmP8qGUUsingGET": {
+            "main": "./lib/actions/action.js",
+            "title": "Get Milestones by ID",
+            "description": "Returns the individual milestone specified by the given ID.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones/{milestoneId}",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getMilestoneById_WmP8qGUUsingGET.in.json",
+                "out": "./lib/schemas/getMilestoneById_WmP8qGUUsingGET.out.json"
+            }
+        },
+        "deleteObsType_7pgMY_IUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete an OBS Type by ID",
+            "description": "Delete the OBS type specified by the given ID. If the OBS type with the given ID does not exist, the request will fail.",
+            "callParams": {
+                "pathName": "/v1/obsTypes/{obsTypeId}",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteObsType_7pgMY_IUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteObsType_7pgMY_IUsingDELETE.out.json"
+            }
+        },
+        "updateMilestone_YnoWQjUUsingPATCH": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Milestones",
+            "description": "Perform an update on a milestone specified by the given ID.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones/{milestoneId}",
+                "method": "patch",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateMilestone_YnoWQjUUsingPATCH.in.json",
+                "out": "./lib/schemas/updateMilestone_YnoWQjUUsingPATCH.out.json"
+            }
+        },
+        "createMilestone_K0e4OZEUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create Milestones",
+            "description": "Returns the newly created milestone",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createMilestone_K0e4OZEUsingPOST.in.json",
+                "out": "./lib/schemas/createMilestone_K0e4OZEUsingPOST.out.json"
             }
         },
         "getRoleCapacities_jG1k8FwUsingGET": {
@@ -956,6 +876,86 @@
             "metadata": {
                 "in": "./lib/schemas/updateRoleCapacities_ax3RIEkUsingPOST.in.json",
                 "out": "./lib/schemas/updateRoleCapacities_ax3RIEkUsingPOST.out.json"
+            }
+        },
+        "createFinancials_K0e4OZEUsingPOST": {
+            "main": "./lib/actions/action.js",
+            "title": "Create Financials",
+            "description": "Returns the newly created financial event.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials",
+                "method": "post",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/createFinancials_K0e4OZEUsingPOST.in.json",
+                "out": "./lib/schemas/createFinancials_K0e4OZEUsingPOST.out.json"
+            }
+        },
+        "getObsTypeById_7pgMY_IUsingGET": {
+            "main": "./lib/actions/action.js",
+            "title": "Get an OBS Type by ID",
+            "description": "This endpoint is for OBS types only. To get OBS units, use <tt>/obsTypes/&lt;obs-type-id&gt;/obsUnits",
+            "callParams": {
+                "pathName": "/v1/obsTypes/{obsTypeId}",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getObsTypeById_7pgMY_IUsingGET.in.json",
+                "out": "./lib/schemas/getObsTypeById_7pgMY_IUsingGET.out.json"
+            }
+        },
+        "deleteFinancials_vi4Ugd4UsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Financials",
+            "description": "Deletes a financial event in a given project of a scenario.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials/{financialsId}",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteFinancials_vi4Ugd4UsingDELETE.in.json",
+                "out": "./lib/schemas/deleteFinancials_vi4Ugd4UsingDELETE.out.json"
+            }
+        },
+        "deleteMilestone_WmP8qGUUsingDELETE": {
+            "main": "./lib/actions/action.js",
+            "title": "Delete Milestones",
+            "description": "Deletes a milestone in a given project of a scenario.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/milestones/{milestoneId}",
+                "method": "delete"
+            },
+            "metadata": {
+                "in": "./lib/schemas/deleteMilestone_WmP8qGUUsingDELETE.in.json",
+                "out": "./lib/schemas/deleteMilestone_WmP8qGUUsingDELETE.out.json"
+            }
+        },
+        "updateAllocation_3rzM9CAUsingPATCH": {
+            "main": "./lib/actions/action.js",
+            "title": "Update Allocations",
+            "description": "This endpoint lets you update existing allocations of a project. Changes will only be made for the specified date ranges as well as the specified resources and roles.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/allocations/{allocationId}",
+                "method": "patch",
+                "requestContentType": "application/json"
+            },
+            "metadata": {
+                "in": "./lib/schemas/updateAllocation_3rzM9CAUsingPATCH.in.json",
+                "out": "./lib/schemas/updateAllocation_3rzM9CAUsingPATCH.out.json"
+            }
+        },
+        "getFinancialsById_vi4Ugd4UsingGET": {
+            "main": "./lib/actions/action.js",
+            "title": "Get Financials by ID",
+            "description": "Returns the individual financial event specified by the given ID.",
+            "callParams": {
+                "pathName": "/v1/scenarios/{scenarioId}/projects/{projectId}/financials/{financialsId}",
+                "method": "get"
+            },
+            "metadata": {
+                "in": "./lib/schemas/getFinancialsById_vi4Ugd4UsingGET.in.json",
+                "out": "./lib/schemas/getFinancialsById_vi4Ugd4UsingGET.out.json"
             }
         }
     }
